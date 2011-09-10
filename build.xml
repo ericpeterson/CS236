@@ -117,6 +117,8 @@
             <include name="**/*"/>
           <!--keep-->
             <exclude name="build.xml"/>
+            <exclude name=".git/"/>
+            <exclude name="README.md"/>
             <exclude name="${src}/**/*.java"/> 
             <exclude name="${test-src}/**/*.java"/>
             <exclude name="${test-src}/testlex/*.txt"/>

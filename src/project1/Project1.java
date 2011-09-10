@@ -4,12 +4,19 @@
 
 package project1;
 
-public class Project1
-{
-	public static String body(String[] args)
-	{
-System.out.println("Implement the Project1.body");
+public class Project1 {
+	public static String body(String[] args) {
+    BufferedReader reader = new BufferedReade(new FileReader(args[0]));
+
+    try {
+      LexicalAnalyzer lex = new LexicalAnalyzer(reader);
+    } catch (IOException exc) {
+      System.out.println("IOException: " + exc);
+    }
+
 		String output = "";
+
 		return output;
 	}
 }
+

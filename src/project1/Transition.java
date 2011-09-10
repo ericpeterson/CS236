@@ -22,7 +22,9 @@ class Transition {
 
   // Print method
   public String toString() {
+    String output = "";
     // TODO: write toString()
+    return output;
   }
 }
 

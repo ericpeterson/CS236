@@ -4,14 +4,25 @@
 
 package project1;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+
 public class Project1 {
 	public static String body(String[] args) {
-    BufferedReader reader = new BufferedReade(new FileReader(args[0]));
+    BufferedReader reader = null;
+
+    try {
+      reader = new BufferedReader(new FileReader(args[0]));
+    } catch (FileNotFoundException exc) {
+      System.out.println(exc);
+    }
 
     try {
       LexicalAnalyzer lex = new LexicalAnalyzer(reader);
     } catch (IOException exc) {
-      System.out.println("IOException: " + exc);
+      System.out.println(exc);
     }
 
 		String output = "";

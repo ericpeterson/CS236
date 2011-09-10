@@ -21,11 +21,13 @@ enum State {
 
   UNDEFINED {
     public Transition nextTransition(int currentChar) {
-      State currentCharState = doStart(currentChar);
+      State nextState = doStart(currentChar);
       TokenType tokenType = TokenType.UNDEFINED;
       return new Transition(nextState, tokenType);
     }
   };
+
+  private static final int EOF_CHAR = -1;
 
   // End of the list of states.
 
@@ -37,7 +39,6 @@ enum State {
   public abstract Transition nextTransition(int currentChar);
 
   public static State doStart(int currentChar) {
-    static final int EOF_CHAR = -1;
 
     if (currentChar == EOF_CHAR) {
       return EOF;      

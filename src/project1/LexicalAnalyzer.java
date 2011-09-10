@@ -2,7 +2,9 @@
 package project1;
 
 import java.util.Iterator;
-// import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class LexicalAnalyzer implements Iterable<Token> {
   private ArrayList<Token> tokenList = new ArrayList<Token>();

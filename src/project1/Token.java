@@ -29,7 +29,9 @@ public class Token {
 
   // Print method
   public String toString() {
+    String output = "";
     // TODO: write method -> generate most of the required output
+    return output;
   }
 }
 

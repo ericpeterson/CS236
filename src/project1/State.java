@@ -44,6 +44,13 @@ enum State {
       return EOF;      
     } else {
       char ch = (char)currentChar;
+
+      // debug
+      /*
+      System.out.println(ch);
+      */
+      // end debug
+     
       // Check for specific characters here.
       return UNDEFINED;
     }

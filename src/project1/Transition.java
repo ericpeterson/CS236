@@ -23,7 +23,9 @@ class Transition {
   // Print method
   public String toString() {
     String output = "";
-    // TODO: write toString()
+    
+    output = "nextState: " + this.getNextState() + ", tokenType: " + this.getTokenType(); 
+  
     return output;
   }
 }

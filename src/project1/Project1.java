@@ -8,24 +8,26 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 
 public class Project1 {
 	public static String body(String[] args) {
-    BufferedReader reader = null;
-
+    String output = "";
+    Iterator<Token> itr = null;
+    LexicalAnalyzer lex = null;
+  
     try {
-      reader = new BufferedReader(new FileReader(args[0]));
+      BufferedReader reader = new BufferedReader(new FileReader(args[0]));
+      lex = new LexicalAnalyzer(reader);
     } catch (FileNotFoundException exc) {
       System.out.println(exc);
-    }
-
-    try {
-      LexicalAnalyzer lex = new LexicalAnalyzer(reader);
     } catch (IOException exc) {
       System.out.println(exc);
     }
 
-		String output = "";
+    for (Token token: lex) {
+      System.out.println(token);
+    }
 
 		return output;
 	}

@@ -118,6 +118,7 @@
           <!--keep-->
             <exclude name="build.xml"/>
             <exclude name=".git/"/>
+            <exclude name=".gitignore"/>
             <exclude name="README.md"/>
             <exclude name="${src}/**/*.java"/> 
             <exclude name="${test-src}/**/*.java"/>

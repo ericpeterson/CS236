@@ -25,6 +25,8 @@ public class Project1 {
       System.out.println(exc);
     }
 
+    lex.analyze();
+
     for (Token token: lex) {
       System.out.println(token);
     }

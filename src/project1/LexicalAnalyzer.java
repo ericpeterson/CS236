@@ -12,26 +12,17 @@ public class LexicalAnalyzer implements Iterable<Token> {
 
   public LexicalAnalyzer(BufferedReader reader) throws IOException {
     State state = State.START;
-    int currentLineNum = 0;     
+    int currentLineNum = 1;     
     String currentValue = "";
+    Input input = new Input(reader); 
  
     while (state != State.EOF) {
-      int nextChar = reader.read();
+      int nextChar = input.getCurrentCharacter();
       TokenType currentType = null;
       Transition transition = state.nextTransition(nextChar);
 
       state = transition.getNextState();
 
-      // debug
-      /*
-      if (-1 != nextChar) {
-        System.out.printf("%c: %d\n", (char)nextChar, nextChar);
-      } else {
-        System.out.println(nextChar);
-      }
-      */ 
-      // end debug
-      
       // If the transition's output token is non-null, then there
       // is a complete token to emit. If it is null, then the value is
       // still being built, and there is nothing to emit.
@@ -49,6 +40,8 @@ public class LexicalAnalyzer implements Iterable<Token> {
       if (nextChar == LINE_FEED_ASCII) {
         currentLineNum += 1; 
       }
+
+      input.advance();
     }
   }
 

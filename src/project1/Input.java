@@ -31,7 +31,7 @@ public class Input {
 
     while (currentChar != EOS) {
       sequenceOfIntegers.add(currentChar);
-      
+
       try {
         currentChar = reader.read();
       } catch (IOException exc) {
@@ -66,6 +66,11 @@ public class Input {
       value += (char)sequenceOfIntegers.get(itr).intValue(); 
     }
 
+    // Do not print out the EOF character
+    if (locationOfCurrentCharacter >= (sequenceOfIntegers.size() - 1)) {
+      value = "";
+    }
+
     return value; 
   }
 
@@ -78,14 +83,14 @@ public class Input {
     // only advance in the sequence if the current character
     // location is less than the size of the sequence itself.
     if (locationOfCurrentCharacter < (sequenceOfIntegers.size() - 1)) {
-      locationOfCurrentCharacter += 1;
       
-      if (sequenceOfIntegers.get(locationOfCurrentCharacter) == LINE_FEED_ASCII) {
+      if ((char)sequenceOfIntegers.get(locationOfCurrentCharacter).intValue() == '\n') {
         lineNumberOfCurrentCharacter += 1; 
       }
     } else { // do not advance if we are past the list's size
       locationOfCurrentCharacter = locationOfCurrentCharacter;
     }
+    locationOfCurrentCharacter += 1;
   }
 }
 

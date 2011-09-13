@@ -33,7 +33,7 @@ public class LexicalAnalyzer implements Iterable<Token> {
 
   // emits the current token
   void emit(TokenType tokenType) {
-    if (tokenType != null && tokenType != TokenType.WHITESPACE) {
+    if (tokenType != null && tokenType != TokenType.WHITESPACE) { 
       String value = input.getValue();
       if (value.equals("Schemes")) {
         tokenType = TokenType.SCHEMES;

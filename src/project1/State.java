@@ -5,8 +5,11 @@ enum State {
     public Transition nextTransition(int currentChar) {
       // The code to determine the next state after the start state is
       // in a separate method that is reused by other states.
-      State nextState = doStart(currentChar);
-      TokenType tokenType = null;
+      State nextState;
+      TokenType tokenType;
+  
+      nextState = doStart(currentChar);
+      tokenType = null;
       return new Transition(nextState, tokenType);
     }
   },

@@ -20,16 +20,12 @@ public class LexicalAnalyzer implements Iterable<Token> {
   // helper class to perform the token generation
   public void analyze () {
     currentState = State.START;
-    int count = 0;   
  
     while (currentState != State.EOF) {
       Transition transition = currentState.nextTransition(input.getCurrentCharacter());
       currentState = transition.getNextState();
       emit(transition.getTokenType());
       input.advance();
-
-      count++;
-      if (count > 16) { break; }
     }
 
     emit(TokenType.EOF); 
@@ -40,25 +36,28 @@ public class LexicalAnalyzer implements Iterable<Token> {
     if (tokenType != null && tokenType != TokenType.WHITESPACE) {
       String value = input.getValue();
 
-      switch (tokenType) {
-        case SCHEMES:
-          tokenType = TokenType.SCHEMES;
-          break;
-        case FACTS:
-          tokenType = TokenType.FACTS;
-          break;
-        case RULES:
-          tokenType = TokenType.RULES;
-          break;
-        case QUERIES:
-          tokenType = TokenType.QUERIES; 
-          break;
+      if (value.equals("Schemes")) {
+        tokenType = TokenType.SCHEMES;
+      } else if (value.equals("Facts")) {
+        tokenType = TokenType.FACTS;
+      } else if (value.equals("Rules")) {
+        tokenType = TokenType.RULES;
+      } else if (value.equals("Queries")) {
+        tokenType = TokenType.QUERIES;
       }
- 
+      
       Token token = new Token (tokenType, value, input.getLineNumber());
       tokenList.add(token);
       input.markBeginningOfNextToken();
+    } else if (tokenType == TokenType.WHITESPACE) {
+      input.markBeginningOfNextToken();
     } 
+  }
+  
+  // This is for printing out
+  // Total Tokens = ...
+  public String toString () {
+    return "Total Tokens = " + tokenList.size();
   }
 
   // This allows code that uses a LexicalAnalyzer called lexer to do:

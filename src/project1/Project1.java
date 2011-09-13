@@ -30,6 +30,8 @@ public class Project1 {
     for (Token token: lex) {
       System.out.println(token);
     }
+  
+    System.out.println(lex);
 
 		return output;
 	}

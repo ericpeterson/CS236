@@ -14,7 +14,6 @@ public class Input {
   // predefined constants
   private final static int EOS = -1; // end of stream
   private static final int LINE_FEED_ASCII = 0x0A; // 0x0A = decimal 10 = '\n'
-
   // Constructor
   Input (BufferedReader reader) {
     int currentChar = EOS;
@@ -32,13 +31,15 @@ public class Input {
 
     while (currentChar != EOS) {
       sequenceOfIntegers.add(currentChar);
-      System.out.println(currentChar + " : " + (char)currentChar);
+
       try {
         currentChar = reader.read();
       } catch (IOException exc) {
         System.out.println(exc);
       }
     }
+
+    sequenceOfIntegers.add(EOS);
   }
 
   int getCurrentCharacter () {

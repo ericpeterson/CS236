@@ -62,10 +62,6 @@ public class Input {
     int endPosition = locationOfCurrentCharacter - 1;
     String value = "";
    
-    if ((char)sequenceOfIntegers.get(locationOfCurrentCharacter).intValue() == '\n') {
-      endPosition = endPosition - 1;  
-    }
- 
     for (itr = locationOfBeginningOfCurrentToken; itr <= endPosition; itr++) {
       value += (char)sequenceOfIntegers.get(itr).intValue(); 
     }

@@ -260,8 +260,8 @@ enum State {
       State nextState;
 
       if ((char)currentChar == '\'') {
-        tokenType = TokenType.UNDEFINED;
-        nextState = doStart(currentChar); 
+        tokenType = null;
+        nextState = State.STRING_END; 
       } else {
         tokenType = null;
         nextState = State.STRING;

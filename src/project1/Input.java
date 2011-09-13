@@ -31,7 +31,7 @@ public class Input {
 
     while (currentChar != EOS) {
       sequenceOfIntegers.add(currentChar);
-
+      
       try {
         currentChar = reader.read();
       } catch (IOException exc) {
@@ -61,7 +61,11 @@ public class Input {
     int itr = 0;
     int endPosition = locationOfCurrentCharacter - 1;
     String value = "";
-    
+   
+    if ((char)sequenceOfIntegers.get(locationOfCurrentCharacter).intValue() == '\n') {
+      endPosition = endPosition - 1;  
+    }
+ 
     for (itr = locationOfBeginningOfCurrentToken; itr <= endPosition; itr++) {
       value += (char)sequenceOfIntegers.get(itr).intValue(); 
     }

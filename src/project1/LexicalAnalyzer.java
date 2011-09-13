@@ -21,7 +21,7 @@ public class LexicalAnalyzer implements Iterable<Token> {
   public void analyze () {
     currentState = State.START;
  
-    while (currentState != State.EOF) {
+    while (currentState != State.EOF) { 
       Transition transition = currentState.nextTransition(input.getCurrentCharacter());
       currentState = transition.getNextState();
       emit(transition.getTokenType());
@@ -35,7 +35,6 @@ public class LexicalAnalyzer implements Iterable<Token> {
   void emit(TokenType tokenType) {
     if (tokenType != null && tokenType != TokenType.WHITESPACE) {
       String value = input.getValue();
-
       if (value.equals("Schemes")) {
         tokenType = TokenType.SCHEMES;
       } else if (value.equals("Facts")) {

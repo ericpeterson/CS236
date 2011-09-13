@@ -1,5 +1,5 @@
 Queries:
-     IsInRoomAtDH('Snoopy',R,'M''',H)
+     IsInRoomAtDH('Snoopy',R,'M',H)
 #SchemesFactsRules
 .
 #|comment >=

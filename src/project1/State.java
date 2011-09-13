@@ -20,9 +20,12 @@ enum State {
       if ((char)currentChar == '|') {
         nextState = State.BLOCK_COMMENT;
         tokenType = null; 
-      } else if ((char)currentChar == '#') {
-        nextState = doStart(currentChar); 
+      } else if ((char)currentChar == '\n') {
+        nextState = doStart(currentChar);
         tokenType = TokenType.COMMENT;
+      } else if (currentChar == -1) {
+        nextState = State.EOF;
+        tokenType = TokenType.UNDEFINED;
       } else {
         nextState = State.COMMENT;
         tokenType = null;
@@ -40,6 +43,9 @@ enum State {
       if ((char)currentChar == '|') {
         nextState = State.BLOCK_COMMENT_END;
         tokenType = null;
+      } else if (currentChar == -1) {
+        nextState = State.EOF;
+        tokenType = TokenType.UNDEFINED;
       } else {
         nextState = State.BLOCK_COMMENT;
         tokenType = null;
@@ -54,14 +60,17 @@ enum State {
       State nextState;
       TokenType tokenType;
     
-      if ((char)currentChar == '#') {
-        nextState = doStart(currentChar);
-        tokenType = TokenType.COMMENT;
+      if ((char)currentChar == '#') { 
+        nextState = State.COMMENT_END;
+        tokenType = null;
+      } else if (currentChar == -1) {
+        nextState = State.EOF;
+        tokenType = TokenType.UNDEFINED;
       } else {
         nextState = State.BLOCK_COMMENT;
         tokenType = null;
       }
-    
+
       return new Transition(nextState, tokenType);
     }
   },
@@ -70,10 +79,13 @@ enum State {
     public Transition nextTransition(int currentChar) {
       State nextState;
       TokenType tokenType;
-      
+     
       if ((char)currentChar == '\n') {
-        nextState = doStart(currentChar);
+        nextState = State.WHITESPACE;
         tokenType = TokenType.COMMENT;
+      } else if (currentChar == -1) {
+        nextState = State.EOF;
+        tokenType = TokenType.UNDEFINED;
       } else {
         nextState = State.COMMENT;
         tokenType = null;
@@ -83,17 +95,24 @@ enum State {
     }
   },
 
+  COMMENT_END {
+    public Transition nextTransition(int currentChar) {
+      State nextState = doStart(currentChar);
+      TokenType tokenType = TokenType.COMMENT;
+      
+      return new Transition(nextState, tokenType);
+    }
+  },
+
   // Symbols
   COLON_DASH {
     public Transition nextTransition(int currentChar) {
-      State nextState; 
+      State nextState = doStart(currentChar); 
       TokenType tokenType;
 
       if ((char)currentChar == '-') {
-        nextState = doStart(currentChar);
         tokenType = TokenType.COLON_DASH;
       } else {
-        nextState = doStart(currentChar);
         tokenType = TokenType.COLON;
       }
 
@@ -263,7 +282,10 @@ enum State {
       }/* else if ((char)currentChar == '\\') {
         tokenType = null;
         nextState = State.NEWLINE;
-      }*/ else {
+      }*/ else if (currentChar == -1) { // EOF case
+        tokenType = TokenType.UNDEFINED; 
+        nextState = State.EOF;
+      } else {
         tokenType = null;
         nextState = State.STRING;
       }

@@ -8,8 +8,14 @@ public class Project2
 {
 	public static String body(String[] args)
 	{
-System.out.println("Implement the Project2.body");
-		String output = "";
+    String inputFile = args[0];
+	  DatalogProgram dataProg = new DatalogProgram(inputFile);
+    String output = "";
+    
+    dataProg.parse();
+    
+    output = "Success!\n" + dataProg.toString();
+
 		return output;
 	}
 }

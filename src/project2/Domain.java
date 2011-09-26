@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class Domain implements Set {
+  Set domain;
   // implemented methods of Set
   public void clear() {}
   public boolean removeAll(Collection collection) {
@@ -47,5 +48,15 @@ public class Domain implements Set {
   }
   public int size() {
     return 0;
+  }
+
+  public String toString () {
+    String output = "";
+
+    for (String string : domain) {
+      output += string; 
+    }   
+    
+    return output; 
   }
 }

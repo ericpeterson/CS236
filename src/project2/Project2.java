@@ -13,7 +13,8 @@ public class Project2
     String output = "";
     
     dataProg.parse();
-    
+
+    // this should call the toString methods of its children in the parse tree.    
     output = "Success!\n" + dataProg.toString();
 
 		return output;

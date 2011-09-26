@@ -1,0 +1,17 @@
+Schemes:
+  employee(N,I,A,J)
+  WhoToBlame(N,J)
+
+Facts:
+  employee('Dilbert','51','10 Main','EE').
+  employee('Dilbert','51','10 Main','Marketing').
+  employee('Dogbert','52','10 Main','EE').
+  employee('PHB','53','Hades','Pain Management').
+
+Rules:
+  WhoToBlame(N,J) :- employee(N,'51',A,J),expr((A+A)).
+  WhoToBlame(N,I) :- NotEquals(!=('Dilbert','PHB')).
+
+Queries:
+  WhoToBlame('Dilbert',J)?
+  WhoToBlame(N,'EE')?

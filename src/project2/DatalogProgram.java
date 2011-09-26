@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class DatalogProgram {
+public class DatalogProgram extends NT_Node {
   private LexicalAnalyzer lex;
 
   public DatalogProgram (String file) {
@@ -30,9 +30,13 @@ public class DatalogProgram {
     lex.analyze();
 
     for (Token token: lex) {
-      System.out.println(token);
+      System.out.println(token.getValue());
     }
   
     System.out.println(lex);
+  }
+
+  public String toString () {
+    return "";
   }
 }

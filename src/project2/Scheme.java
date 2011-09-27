@@ -2,15 +2,30 @@
 package project2;
 
 import project1.*;
+import java.util.ArrayList;
 
 public class Scheme extends NT_Node {
-  Scheme (Token token) throws ParseError {
-    switch (token.getType()) {
-      case TokenType.ID:
-        // Only case
-        break;
-      default:
-        throw new ParseError(token);
+  private ArrayList<Token> tokenList;
+
+  Scheme () {
+    tokenList = new ArrayList<Token>();
+  }
+
+  public void add (Token token) {
+    tokenList.add(token);
+  }
+  
+  public ArrayList<Token> getTokenList() {
+    return tokenList;
+  }
+
+  public String toString() {
+    String output = "";
+  
+    for (Token token: tokenList) {
+      output += token.getValue();
     }
+
+    return output;
   }
 }

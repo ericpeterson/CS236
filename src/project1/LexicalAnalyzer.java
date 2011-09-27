@@ -17,6 +17,10 @@ public class LexicalAnalyzer implements Iterable<Token> {
     input = new Input(reader); 
   }
 
+  public ArrayList<Token> getTokenList () {
+    return tokenList;
+  }
+
   // helper class to perform the token generation
   public void analyze () {
     currentState = State.START;

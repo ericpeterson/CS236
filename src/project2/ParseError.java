@@ -13,8 +13,8 @@ public class ParseError extends Exception {
 
   public String toString() {
     String output = "Failure!\n" + 
-      "(" + offendingToken.getType() + "," + 
-      offendingToken.getValue() + "," + 
+      "(" + offendingToken.getType() + ",\"" + 
+      offendingToken.getValue() + "\"," + 
       offendingToken.getLineNumber() + 
       ")";
 

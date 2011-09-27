@@ -12,10 +12,12 @@ public class Project2
 	  DatalogProgram dataProg = new DatalogProgram(inputFile);
     String output = "";
     
-    dataProg.parse();
-
-    // this should call the toString methods of its children in the parse tree.    
-    output = "Success!\n" + dataProg.toString();
+    try {
+      dataProg.parse();
+      output = "Success!\n" + dataProg.toString();
+    } catch (ParseError parseError) {
+      System.out.println(parseError); 
+    }
 
 		return output;
 	}

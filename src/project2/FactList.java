@@ -21,9 +21,9 @@ public class FactList extends ArrayList<Fact> {
     String facts = "";
   
     for (Fact fact: this) {
-      facts += "\n" + fact;
+      facts += "\n  " + fact;
     }
 
-    return "Facts(" + this.size() + "):" + facts; 
+    return "Facts(" + this.size() + "):" + facts + "\n"; 
   }
 }

@@ -23,7 +23,11 @@ public class Rule {
     String output = "";
   
     for (Token token: tokenList) {
-      output += token.getValue();
+      if(token.getType() == TokenType.COLON_DASH) {
+        output += " " + token.getValue() + " ";
+      } else {
+        output += token.getValue();
+      }
     }
 
     return output;

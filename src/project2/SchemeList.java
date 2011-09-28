@@ -21,9 +21,9 @@ public class SchemeList extends ArrayList<Scheme> {
     String schemes = "";
   
     for (Scheme scheme: this) {
-      schemes += "\n" + scheme;
+      schemes += "\n  " + scheme;
     }
 
-    return "Schemes(" + this.size() + "):" + schemes; 
+    return "Schemes(" + this.size() + "):" + schemes + "\n"; 
   }
 }

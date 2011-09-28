@@ -14,6 +14,8 @@ public class DatalogProgram extends NT_Node {
   private FactList factList;
   private RuleList ruleList;
   private QueryList queryList;
+  private Domain domain;
+  
 
   public DatalogProgram (String file) {
     BufferedReader reader = null;
@@ -33,27 +35,29 @@ public class DatalogProgram extends NT_Node {
     factList = new FactList();
     ruleList = new RuleList();
     queryList = new QueryList();
+    domain = new Domain();
   }
 
-  DatalogProgram(SchemeList schemeList, FactList factList, RuleList ruleList, QueryList queryList) {
+  DatalogProgram(SchemeList schemeList, FactList factList, RuleList ruleList, QueryList queryList, Domain domain) {
     this.schemeList = schemeList;
     this.factList = factList;
     this.ruleList = ruleList;
-    this.queryList = queryList; 
+    this.queryList = queryList;
+    this.domain = domain; 
   }
 
   // this is the method that gets the ball rolling
   public DatalogProgram parse () throws ParseError {
     Parser parser = new Parser();
     DatalogProgram datalogProgram = parser.parseDatalogProgram(lex); 
-      
+    
     return datalogProgram;
   }
 
   public String toString () {
     String output = "";
-    
-    output = schemeList.toString() + factList.toString() + ruleList.toString() + queryList.toString();
+
+    output = schemeList.toString() + factList + ruleList + queryList + domain;
 
     return output;
   }

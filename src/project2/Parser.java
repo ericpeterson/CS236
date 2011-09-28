@@ -8,6 +8,7 @@ public class Parser {
   private FactList factList;
   private RuleList ruleList;
   private QueryList queryList;
+  private Domain domain;
 
   private ArrayList<Token> tokenList;
 
@@ -18,10 +19,20 @@ public class Parser {
     factList = new FactList();
     ruleList = new RuleList();
     queryList = new QueryList();
+    domain = new Domain();
 
     tokenList = new ArrayList<Token>();
 
     this.rule = new Rule();
+  }
+
+  private void ignoreComments() {
+    Token currentToken = tokenList.get(0);
+    // Ignore comments
+    while (currentToken.getType() == TokenType.COMMENT) {
+      tokenList.remove(0);
+      currentToken = tokenList.get(0);
+    }
   }
 
   public DatalogProgram parseDatalogProgram (LexicalAnalyzer lex) throws ParseError {
@@ -30,28 +41,40 @@ public class Parser {
 
     tokenList = lex.getTokenList();
     currentToken = tokenList.get(0);
-
+  
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
+ 
     // make sure the Schemes are first
     if(currentToken.getType() != TokenType.SCHEMES) {
       throw new ParseError(currentToken); 
     }
     tokenList.remove(0);
     currentToken = tokenList.get(0);
+
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
+
     if(currentToken.getType() != TokenType.COLON) {
       throw new ParseError(currentToken); 
     }
     tokenList.remove(0);
-  
+
     // parse SchemeList
     schemeList = this.parseSchemeList();
     currentToken = tokenList.get(0);
 
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
     // make sure Facts comes next
     if(currentToken.getType() != TokenType.FACTS) {
       throw new ParseError(currentToken);
     }
     tokenList.remove(0);
     currentToken = tokenList.get(0);
+
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
     if(currentToken.getType() != TokenType.COLON) {
       throw new ParseError(currentToken);
     }
@@ -61,35 +84,46 @@ public class Parser {
     factList = this.parseFactList(); 
     currentToken = tokenList.get(0);
 
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
     // make sure Rules comes next
     if(currentToken.getType() != TokenType.RULES) {
       throw new ParseError(currentToken);
     }
     tokenList.remove(0);
     currentToken = tokenList.get(0);
+
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
     if(currentToken.getType() != TokenType.COLON) {
       throw new ParseError(currentToken);
     }
-  
+    tokenList.remove(0); 
+ 
     // parse RuleList
     ruleList = this.parseRuleList(); 
     currentToken = tokenList.get(0);
 
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
     // make sure Queries comes last
     if(currentToken.getType() != TokenType.QUERIES) {
       throw new ParseError(currentToken);
     }
     tokenList.remove(0);
     currentToken = tokenList.get(0);
+
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
     if(currentToken.getType() != TokenType.COLON) {
       throw new ParseError(currentToken);
     }
-  
+    tokenList.remove(0); 
+ 
     // parse QueryList
     queryList = this.parseQueryList();
-    currentToken = tokenList.get(0);
 
-    return new DatalogProgram(schemeList, factList, ruleList, queryList);
+    return new DatalogProgram(schemeList, factList, ruleList, queryList, domain);
   }
 
   public SchemeList parseSchemeList() throws ParseError {
@@ -101,14 +135,19 @@ public class Parser {
       Scheme scheme = new Scheme();
       boolean inAttributeListTail = true;
 
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
+
       // <Identifier>
-      if (currentToken.getType() != TokenType.ID) {
+      if (currentToken.getType() != TokenType.ID) { 
         throw new ParseError(currentToken);
       }
       scheme.add(currentToken);
       tokenList.remove(0);
       currentToken = tokenList.get(0);
 
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       // ( 
       if (currentToken.getType() != TokenType.LEFT_PAREN) {
         throw new ParseError(currentToken);
@@ -117,6 +156,8 @@ public class Parser {
       tokenList.remove(0);
       currentToken = tokenList.get(0);
 
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       // <Identifier>
       if(currentToken.getType() != TokenType.ID) {
         throw new ParseError(currentToken);
@@ -127,6 +168,8 @@ public class Parser {
 
       // <Attribute List Tail>
       while (inAttributeListTail) {
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         // ,
         if (currentToken.getType() != TokenType.COMMA) {
           if (currentToken.getType() != TokenType.RIGHT_PAREN) {
@@ -144,6 +187,8 @@ public class Parser {
         tokenList.remove(0);
         currentToken = tokenList.get(0);
 
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         // <Identifier>
         if (currentToken.getType() != TokenType.ID) {
             throw new ParseError(currentToken); 
@@ -155,6 +200,8 @@ public class Parser {
 
       schemel.add(scheme);
 
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       if (currentToken.getType() == TokenType.FACTS) {
         inSchemeListTail = false;
       }
@@ -167,12 +214,21 @@ public class Parser {
     FactList factl = new FactList();
     Token currentToken = tokenList.get(0);
     boolean inFactList = true;
-
+    
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
+    // empty fact list
+    if (currentToken.getType() == TokenType.RULES) {
+      return factl;
+    }
+  
     // <FactList>
     do {
       Fact facts = new Fact();
       boolean inConstantListTail = true;
  
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       // <Identifier> 
       if (currentToken.getType() != TokenType.ID) {
         throw new ParseError(currentToken);
@@ -181,6 +237,8 @@ public class Parser {
       tokenList.remove(0);
       currentToken = tokenList.get(0);
 
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       // (
       if (currentToken.getType() != TokenType.LEFT_PAREN) {
         throw new ParseError(currentToken);
@@ -189,16 +247,21 @@ public class Parser {
       tokenList.remove(0);
       currentToken = tokenList.get(0);
 
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       // String
       if (currentToken.getType() != TokenType.STRING) {        
         throw new ParseError(currentToken);
       }
       facts.add(currentToken);
+      domain.add(currentToken.getValue());
       tokenList.remove(0);
       currentToken = tokenList.get(0);
 
       // <Constant List Tail>
       while (inConstantListTail) {
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         // ,
         if (currentToken.getType() != TokenType.COMMA) {
           if (currentToken.getType() != TokenType.RIGHT_PAREN) {
@@ -208,6 +271,8 @@ public class Parser {
           tokenList.remove(0);
           currentToken = tokenList.get(0);
           
+          this.ignoreComments(); 
+          currentToken = tokenList.get(0); 
           if (currentToken.getType() != TokenType.PERIOD) {
             throw new ParseError(currentToken);
           }
@@ -222,17 +287,22 @@ public class Parser {
         tokenList.remove(0);
         currentToken = tokenList.get(0);
         
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         // String
         if (currentToken.getType() != TokenType.STRING) {        
           throw new ParseError(currentToken);
         }
         facts.add(currentToken);
+        domain.add(currentToken.getValue());
         tokenList.remove(0);
         currentToken = tokenList.get(0);
       }
 
       factl.add(facts);
 
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       if (currentToken.getType() == TokenType.RULES) {
         inFactList = false;
       }
@@ -246,9 +316,19 @@ public class Parser {
     Token currentToken = tokenList.get(0);
     boolean inRuleList = true;
 
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
+    // empty RuleList
+    if (currentToken.getType() == TokenType.QUERIES) {
+      return rulel;
+    }
+  
     do {
+      this.rule = new Rule();
       boolean inArgumentListTail = true;
    
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       // <Simple Predicate> (ID)
       if (currentToken.getType() != TokenType.ID) {
         throw new ParseError(currentToken);
@@ -257,6 +337,8 @@ public class Parser {
       tokenList.remove(0);
       currentToken = tokenList.get(0);
 
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       // (
       if (currentToken.getType() != TokenType.LEFT_PAREN) {
         throw new ParseError(currentToken);
@@ -265,6 +347,8 @@ public class Parser {
       tokenList.remove(0);
       currentToken = tokenList.get(0);
 
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       // String or <Identifier>
       if (currentToken.getType() != TokenType.STRING) {
         if (currentToken.getType() != TokenType.ID) {
@@ -272,11 +356,17 @@ public class Parser {
         }
       }
       this.rule.add(currentToken);
+
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
+      if (currentToken.getType() == TokenType.STRING){domain.add(currentToken.getValue());}
       tokenList.remove(0);
       currentToken = tokenList.get(0);
 
       // <Argument List Tail>
-      while (inArgumentListTail) {
+      while (inArgumentListTail) { 
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         // ,
         if (currentToken.getType() != TokenType.COMMA) {
           if(currentToken.getType() != TokenType.RIGHT_PAREN) {
@@ -289,128 +379,130 @@ public class Parser {
           inArgumentListTail = false;
           break;
         }
-  
+        this.rule.add(currentToken);
+        tokenList.remove(0);
+        currentToken = tokenList.get(0);
+
         // String or <Identifier>
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         if (currentToken.getType() != TokenType.STRING) {
           if (currentToken.getType() != TokenType.ID) {
             throw new ParseError(currentToken);
           }
         }
         this.rule.add(currentToken);
+
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
+      if (currentToken.getType() == TokenType.STRING){domain.add(currentToken.getValue());}
         tokenList.remove(0);
         currentToken = tokenList.get(0);
       } 
 
       // :-
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       if (currentToken.getType() != TokenType.COLON_DASH) {
         throw new ParseError(currentToken);
       }
       this.rule.add(currentToken);
       tokenList.remove(0);
       currentToken = tokenList.get(0);
-  
-      boolean inPredicateListTail = true;
-    
-      // <Identifier>
-      if (currentToken.getType() != TokenType.ID) { 
-        throw new ParseError(currentToken);
-      }
-      this.rule.add(currentToken);
-      tokenList.remove(0);
-      currentToken = tokenList.get(0);
-  
-      // (
-      if (currentToken.getType() != TokenType.LEFT_PAREN) { 
-        throw new ParseError(currentToken);
-      }
-      this.rule.add(currentToken);
-      tokenList.remove(0);
-      currentToken = tokenList.get(0);
-    
-      this.doParameterList(); 
-      currentToken = tokenList.get(0);
-
-      // )
-      if (currentToken.getType() != TokenType.RIGHT_PAREN) {
-        throw new ParseError(currentToken);
-      }
-      this.rule.add(currentToken);
-      tokenList.remove(0);
-      currentToken = tokenList.get(0);
  
-      // <Predicate List Tail>
-      while (inPredicateListTail) {
-        // ,
-        if (currentToken.getType() != TokenType.COMMA) {
-          if (currentToken.getType() != TokenType.PERIOD) {
+
+      boolean inPredicateList = true;
+
+      while (inPredicateList) {
+        // <Predicate>
+        // <Identifier>
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
+        if(currentToken.getType() != TokenType.ID) {
+          throw new ParseError(currentToken);
+        }
+        this.rule.add(currentToken);
+        tokenList.remove(0);
+        currentToken = tokenList.get(0);
+
+        // (
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
+        if (currentToken.getType() != TokenType.LEFT_PAREN) {
+          throw new ParseError(currentToken);
+        }
+        this.rule.add(currentToken);
+        tokenList.remove(0);
+        currentToken = tokenList.get(0);
+
+        this.doParameter();
+        currentToken = tokenList.get(0);
+   
+        boolean inParameterList = true;
+   
+        while (inParameterList) {
+          // ,
+          this.ignoreComments(); 
+          currentToken = tokenList.get(0); 
+          if (currentToken.getType() != TokenType.COMMA) {
+            if (currentToken.getType() != TokenType.RIGHT_PAREN) {
+              throw new ParseError(currentToken);
+            } // handle )
+            this.rule.add(currentToken);
+            tokenList.remove(0);
+            currentToken = tokenList.get(0);
+
+            inParameterList = false;
+            break;
+          }
+          this.rule.add(currentToken);
+          tokenList.remove(0);
+          currentToken = tokenList.get(0);
+
+          this.doParameter();
+          currentToken = tokenList.get(0);
+        }
+
+        // .
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
+        if (currentToken.getType() != TokenType.PERIOD) {
+          // ,
+          if (currentToken.getType() != TokenType.COMMA) {
             throw new ParseError(currentToken);
           }
           this.rule.add(currentToken);
           tokenList.remove(0);
           currentToken = tokenList.get(0);
-         
-          inPredicateListTail = false;
-          break;
-        }
-
-        // <Identifier>
-        if (currentToken.getType() != TokenType.ID) { 
-          throw new ParseError(currentToken);
+           
+          continue;
         }
         this.rule.add(currentToken);
         tokenList.remove(0);
         currentToken = tokenList.get(0);
-    
-        // (
-        if (currentToken.getType() != TokenType.LEFT_PAREN) { 
-          throw new ParseError(currentToken);
-        }
-        this.rule.add(currentToken);
-        tokenList.remove(0);
-        currentToken = tokenList.get(0);
-      
-        this.doParameterList(); 
-        currentToken = tokenList.get(0);
+   
+        rulel.add(this.rule);
+        inPredicateList = false;
+        break;
+      }
 
-        // )
-        if (currentToken.getType() != TokenType.RIGHT_PAREN) {
-          throw new ParseError(currentToken);
-        }
-        this.rule.add(currentToken);
-        tokenList.remove(0);
-        currentToken = tokenList.get(0);
-      } 
-       
-      rulel.add(this.rule);
-
-      if (currentToken.getType() == TokenType.EOF) {
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
+      if (currentToken.getType() == TokenType.QUERIES) {
         inRuleList = false;
+        break;
       }
     } while (inRuleList); // outer loop
 
     return rulel;
   }
 
-  private void doParameterList () throws ParseError {
-    Token currentToken = tokenList.get(0);
-    boolean inParameterList = true; 
- 
-    // <parameter>
-    do {
-      try {
-        inParameterList = this.doParameter(); 
-      } catch (ParseError parseError) {
-        throw parseError; 
-      }
-    } while (inParameterList);
-     
-  }
-
   // returns false to break out of parameter list loop 
-  private boolean doParameter () throws ParseError {
+  private void doParameter () throws ParseError {
     Token currentToken = tokenList.get(0);
-    boolean return_val = true;
 
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
     // String | <Identifier>
     if (currentToken.getType() != TokenType.STRING) {
       if (currentToken.getType() != TokenType.ID) {
@@ -420,26 +512,50 @@ public class Parser {
             currentToken.getType() != TokenType.NE &&
             currentToken.getType() != TokenType.GE &&
             currentToken.getType() != TokenType.GT) {
-          if (currentToken.getType() != TokenType.LEFT_PAREN) {
+          if (currentToken.getType() != TokenType.LEFT_PAREN) { 
             throw new ParseError(currentToken);
           } // handle Expression
-          try {
-            this.doExpression();
-          } catch (ParseError parseError) {
-            throw parseError;
-          }
-
+          this.rule.add(currentToken);
+          tokenList.remove(0);
+          currentToken = tokenList.get(0);
+          
+          this.doParameter();
+          currentToken = tokenList.get(0);
+  
+          this.ignoreComments(); 
+          currentToken = tokenList.get(0); 
+          // + | *
+          if(currentToken.getType() != TokenType.ADD) {
+            if (currentToken.getType() != TokenType.MULTIPLY) {
+              throw new ParseError(currentToken);
+            }
+          } 
+          this.rule.add(currentToken);
+          tokenList.remove(0);
           currentToken = tokenList.get(0);
 
-          return_val = true;
-        
-          return return_val; 
+          this.doParameter();
+          currentToken = tokenList.get(0);
+
+          // )
+          this.ignoreComments(); 
+          currentToken = tokenList.get(0); 
+          if (currentToken.getType() != TokenType.RIGHT_PAREN) {
+            throw new ParseError(currentToken);
+          }
+          this.rule.add(currentToken);
+          tokenList.remove(0);
+          currentToken = tokenList.get(0);
+
+          return;
         } // handle Comparator 
         this.rule.add(currentToken);
         tokenList.remove(0);
         currentToken = tokenList.get(0);
     
         // (
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         if (currentToken.getType() != TokenType.LEFT_PAREN) {
           throw new ParseError(currentToken);
         } 
@@ -448,6 +564,8 @@ public class Parser {
         currentToken = tokenList.get(0);
  
         // String | <Identifier>
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         if (currentToken.getType() != TokenType.STRING) {
           if (currentToken.getType() != TokenType.ID) {
             throw new ParseError(currentToken);
@@ -458,6 +576,8 @@ public class Parser {
         currentToken = tokenList.get(0);
 
         // ,
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         if (currentToken.getType() != TokenType.COMMA) {
           throw new ParseError(currentToken);
         }
@@ -466,6 +586,8 @@ public class Parser {
         currentToken = tokenList.get(0);
  
         // String | <Identifier>
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         if (currentToken.getType() != TokenType.STRING) {
           if (currentToken.getType() != TokenType.ID) {
             throw new ParseError(currentToken);
@@ -474,57 +596,28 @@ public class Parser {
         this.rule.add(currentToken);
         tokenList.remove(0);
         currentToken = tokenList.get(0);
+      
+        // )
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
+        if (currentToken.getType() != TokenType.RIGHT_PAREN) {
+          throw new ParseError(currentToken);
+        }
+        this.rule.add(currentToken);
+        tokenList.remove(0);
+        currentToken = tokenList.get(0);
 
-        return_val = true;
-        
-        return return_val;
+        return;
       }
     } // handle String or Identifier
     this.rule.add(currentToken);
+
+    this.ignoreComments(); 
+    currentToken = tokenList.get(0); 
+    if (currentToken.getType() == TokenType.STRING){domain.add(currentToken.getValue());}
     tokenList.remove(0);
     currentToken = tokenList.get(0);
-
-    // return and break out of parameter list loop
-    return_val = true;
-
-    return return_val; 
-  }
-
-  private void doExpression () throws ParseError {
-    Token currentToken = tokenList.get(0);
-
-    // (
-    if (currentToken.getType() != TokenType.LEFT_PAREN) {
-      throw new ParseError(currentToken);
-    }
-    this.rule.add(currentToken);
-    tokenList.remove(0);
-    currentToken = tokenList.get(0);
-   
-    this.doParameter();
-    currentToken = tokenList.get(0);
-
-    // + | *
-    if (currentToken.getType() != TokenType.ADD) {
-      if (currentToken.getType() != TokenType.MULTIPLY) {
-        throw new ParseError(currentToken);
-      }
-    }
-    this.rule.add(currentToken);
-    tokenList.remove(0);
-    currentToken = tokenList.get(0);
-
-    this.doParameter();
-    currentToken = tokenList.get(0);
-
-    // )
-    if (currentToken.getType() != TokenType.RIGHT_PAREN) {
-      throw new ParseError(currentToken);
-    }
-    this.rule.add(currentToken);
-    tokenList.remove(0);
-    currentToken = tokenList.get(0);
-    
+  
     return;
   }
 
@@ -538,6 +631,8 @@ public class Parser {
       boolean inArgumentListTail = true;
 
       // <Identifier>
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       if (currentToken.getType() != TokenType.ID) {
         throw new ParseError(currentToken);
       } 
@@ -546,59 +641,77 @@ public class Parser {
       currentToken = tokenList.get(0);
 
       // (
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       if (currentToken.getType() != TokenType.LEFT_PAREN) {
         throw new ParseError(currentToken);
       } 
-      rule.add(currentToken);
+      query.add(currentToken);
       tokenList.remove(0);
       currentToken = tokenList.get(0);
 
       // String or <Identifier>
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       if(currentToken.getType() != TokenType.STRING) {
         if (currentToken.getType() != TokenType.ID) {
           throw new ParseError(currentToken);
         }
       }
-      rule.add(currentToken);
+      query.add(currentToken);
+      if (currentToken.getType() == TokenType.STRING){domain.add(currentToken.getValue());}
       tokenList.remove(0);
       currentToken = tokenList.get(0);
-    
+
       // <Argument Tail List>
       while (inArgumentListTail) {
         //,
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         if (currentToken.getType() != TokenType.COMMA) {
           if (currentToken.getType() != TokenType.RIGHT_PAREN) {
             throw new ParseError(currentToken);
           }
-          rule.add(currentToken);
+          query.add(currentToken);
           tokenList.remove(0);
           currentToken = tokenList.get(0);
 
           inArgumentListTail = false;
           break;
         } 
-        rule.add(currentToken);
+        query.add(currentToken);
         tokenList.remove(0);
         currentToken = tokenList.get(0);
         
         // String or <Identifier>
+        this.ignoreComments(); 
+        currentToken = tokenList.get(0); 
         if(currentToken.getType() != TokenType.STRING) {
           if (currentToken.getType() != TokenType.ID) {
             throw new ParseError(currentToken);
           }
         }
-        rule.add(currentToken);
+        query.add(currentToken);
+        if (currentToken.getType() == TokenType.STRING){domain.add(currentToken.getValue());}
         tokenList.remove(0);
         currentToken = tokenList.get(0);
       }
-     
+    
       // ?
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       if(currentToken.getType() != TokenType.Q_MARK) {
         throw new ParseError(currentToken);
       } 
-
+      query.add(currentToken);
+      tokenList.remove(0);
+      currentToken = tokenList.get(0);
+      
       queryl.add(query);
 
+      
+      this.ignoreComments(); 
+      currentToken = tokenList.get(0); 
       if (currentToken.getType() == TokenType.EOF) {
         inQueryList = false;
       }

@@ -1,0 +1,11 @@
+# hi there
+
+Schemes:
+  employee(N,I,A,J)
+  WhoToBlame(N,J)
+
+Facts:
+Rules:
+Queries:
+  WhoToBlame('Dilbert',J)?
+  WhoToBlame(N,'EE')?

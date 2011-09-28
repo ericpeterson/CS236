@@ -21,9 +21,9 @@ public class RuleList extends ArrayList<Rule>{
     String rules = "";
   
     for (Rule rule: this) {
-      rules += "\n" + rule;
+      rules += "\n  " + rule;
     }
 
-    return "Rules(" + this.size() + "):" + rules; 
+    return "Rules(" + this.size() + "):" + rules + "\n"; 
   }
 }

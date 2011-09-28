@@ -1,17 +1,41 @@
-Schemes:
-  employee(N,I,A,J)
-  WhoToBlame(N,J)
+# hi there
 
-Facts:
-  employee('Dilbert','51','10 Main','EE').
+#| in between
+#comment
+# |#
+Schemes #| I like chees |#:  # hi there
+  employee(N,I,A,J) # I'm bob
+  WhoToBlame(N,J) # what's yo9ur name
+#|
+Multi
+
+Line
+
+
+Comment
+  |#
+
+Facts: # hi
+  employee('Dilbert','51','10 Main','EE') #| this is cool |#.
   employee('Dilbert','51','10 Main','Marketing').
-  employee('Dogbert','52','10 Main','EE').
+  employee('Dogbert'#|I'm in line|#,'52','10 Main','EE').
   employee('PHB','53','Hades','Pain Management').
 
-Rules:
-  WhoToBlame(N,J) :- employee(N,'51',A,J),expr((A+A)).
-  WhoToBlame(N,I) :- NotEquals(!=('Dilbert','PHB')).
+#|
+#
+#WoW
+#
+#|#
+Rules: # what if?
+  WhoToBlame(N,J) :-#|Tricky|# employee(N,'51',A,J),expr((A+A)). # dental
+  WhoToBlame(N,I) :- NotEquals(!=('Dilbert','PHB')) #|Hygiene|#.
 
-Queries:
-  WhoToBlame('Dilbert',J)?
-  WhoToBlame(N,'EE')?
+#| What if?
+#|#
+
+Queries: # why?
+  WhoToBlame('Dilbert',J)#|?|#?
+  WhoToBlame(N,'EE')? # done
+#| in between
+#comment
+# |#

@@ -21,9 +21,9 @@ public class QueryList extends ArrayList<Query> {
     String queries = "";
   
     for (Query query: this) {
-      queries += "\n" + query;
+      queries += "\n  " + query;
     }
 
-    return "Queries(" + this.size() + "):" + queries; 
+    return "Queries(" + this.size() + "):" + queries + "\n"; 
   }
 }

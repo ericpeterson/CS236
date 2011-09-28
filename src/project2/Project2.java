@@ -13,7 +13,7 @@ public class Project2
     String output = "";
     
     try {
-      dataProg.parse();
+      dataProg = dataProg.parse();
       output = "Success!\n" + dataProg.toString();
     } catch (ParseError parseError) {
       System.out.println(parseError); 

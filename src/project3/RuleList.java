@@ -132,7 +132,6 @@ public class RuleList
         assert predicate != null;
 
         if (!previouslySeenPredicates.add(predicate)) {
-          System.out.println("Predicate " + predicate + " is already in the list. Returning false from canProve RuleList.java");
           return false;
         }
 
@@ -143,8 +142,8 @@ public class RuleList
         	result = rule.prove(predicate);
         }
 
-        // TODO: Where should I remove predicate from previouslySeenPredicates? 
-
+        previouslySeenPredicates.remove(predicate);    
+  
         return result;
     }
 

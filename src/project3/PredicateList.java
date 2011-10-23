@@ -132,28 +132,39 @@ public class PredicateList
       boolean isCurrentSubstitutionTrue = false;
       boolean keepOnLooping = true;
       Iterator<Constant> iterator = null;
-      Identifier variableToSubstitute = variables[i];
+      Identifier variableToSubstitute = null;
       Constant constant;
-     
+      int variablesLength = variables.length;
+      int count = 0;
+    
+      if (variablesLength == 0) {
+        existsAtLeastOneSolution = this.checkToSeeIfTrue();
+        return existsAtLeastOneSolution;
+      } else if (i < variablesLength) {
+        variableToSubstitute = variables[i]; 
+      }
+ 
       iterator = Domain.iterator();
 
-      while (keepOnLooping && iterator.hasNext()) {
+      while (iterator != null && iterator.hasNext() && keepOnLooping) {
+        count = 0;
         constant = iterator.next();
-        System.out.println("Substituting variable " +
-                           variableToSubstitute + " for " +
-                           constant + ".");
         this.setVariableToValue(variableToSubstitute, constant);
+        
+        // recursive call
+        if (i < (variablesLength - 1)) {
+          count = i + 1;
+          createAllCombinations(count);
+        }  
+  
         isCurrentSubstitutionTrue = this.checkToSeeIfTrue();
         keepOnLooping = this.keepOnGoing(isCurrentSubstitutionTrue);
         
         if (isCurrentSubstitutionTrue) {
           existsAtLeastOneSolution = true;
         }
-    
-        System.out.println("existsAtLeastOneSolution: " + existsAtLeastOneSolution);
-        System.out.println("keepOnLooping: " + keepOnLooping);
       }
-System.out.println("Returning from createAllCombinations with " + existsAtLeastOneSolution);
+      
       return existsAtLeastOneSolution;
     }
 
@@ -220,7 +231,6 @@ System.out.println("Returning from createAllCombinations with " + existsAtLeastO
       boolean isPredicateListTrue = true;
 
       for (Node p : nodes) {
-        System.out.println("Predicate to prove " + p); 
         if (Project3.datalogProgram.getFactList().canProve((Predicate)p) ||
             Project3.datalogProgram.getRuleList().canProve((Predicate)p)) {
           this.saveResult(); 

@@ -129,8 +129,12 @@ public class RuleList
     public boolean canProve(Predicate predicate)
         throws ParserException
     {
-System.out.println("Modify RuleList.canProve");
         assert predicate != null;
+
+        if (!previouslySeenPredicates.add(predicate)) {
+          System.out.println("Predicate " + predicate + " is already in the list. Returning false from canProve RuleList.java");
+          return false;
+        }
 
         boolean result = false;
         Iterator<Node> iter = nodes.iterator();
@@ -138,6 +142,8 @@ System.out.println("Modify RuleList.canProve");
         	Rule rule = (Rule)iter.next();
         	result = rule.prove(predicate);
         }
+
+        // TODO: Where should I remove predicate from previouslySeenPredicates? 
 
         return result;
     }

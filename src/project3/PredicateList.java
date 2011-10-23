@@ -128,8 +128,33 @@ public class PredicateList
     protected boolean createAllCombinations(int i)
         throws ParserException
     {
-System.out.println("Implement PredicateList.createAllCombinations");
-		return true;
+      boolean existsAtLeastOneSolution = false;
+      boolean isCurrentSubstitutionTrue = false;
+      boolean keepOnLooping = true;
+      Iterator<Constant> iterator = null;
+      Identifier variableToSubstitute = variables[i];
+      Constant constant;
+     
+      iterator = Domain.iterator();
+
+      while (keepOnLooping && iterator.hasNext()) {
+        constant = iterator.next();
+        System.out.println("Substituting variable " +
+                           variableToSubstitute + " for " +
+                           constant + ".");
+        this.setVariableToValue(variableToSubstitute, constant);
+        isCurrentSubstitutionTrue = this.checkToSeeIfTrue();
+        keepOnLooping = this.keepOnGoing(isCurrentSubstitutionTrue);
+        
+        if (isCurrentSubstitutionTrue) {
+          existsAtLeastOneSolution = true;
+        }
+    
+        System.out.println("existsAtLeastOneSolution: " + existsAtLeastOneSolution);
+        System.out.println("keepOnLooping: " + keepOnLooping);
+      }
+System.out.println("Returning from createAllCombinations with " + existsAtLeastOneSolution);
+      return existsAtLeastOneSolution;
     }
 
     /**
@@ -191,8 +216,20 @@ System.out.println("Implement PredicateList.createAllCombinations");
     protected boolean checkToSeeIfTrue()
         throws ParserException
     {
-System.out.println("Implement PredicateList.checkToSeeIfTrue");
-		return true;
+      // TODO: How do I create p?
+      boolean isPredicateListTrue = true;
+
+      for (Node p : nodes) {
+        System.out.println("Predicate to prove " + p); 
+        if (Project3.datalogProgram.getFactList().canProve((Predicate)p) ||
+            Project3.datalogProgram.getRuleList().canProve((Predicate)p)) {
+          this.saveResult(); 
+        } else {
+          isPredicateListTrue = false;
+        }
+      }
+  
+      return isPredicateListTrue;
     }
 
 

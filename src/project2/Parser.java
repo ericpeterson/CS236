@@ -571,6 +571,7 @@ public class Parser {
             throw new ParseError(currentToken);
           }
         }
+        if (currentToken.getType() == TokenType.STRING){domain.add(currentToken.getValue());}
         this.rule.add(currentToken);
         tokenList.remove(0);
         currentToken = tokenList.get(0);
@@ -593,6 +594,7 @@ public class Parser {
             throw new ParseError(currentToken);
           }
         }
+        if (currentToken.getType() == TokenType.STRING){domain.add(currentToken.getValue());}
         this.rule.add(currentToken);
         tokenList.remove(0);
         currentToken = tokenList.get(0);

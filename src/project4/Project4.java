@@ -4,12 +4,10 @@
 
 package project4;
 
-public class Project4
-{
-	public static String body(String[] args)
-	{
-System.out.println("Implement the Project4.body");
-		String output = "";
+public class Project4 {
+	public static String body(String[] args) {
+    Database database = new Database();
+		String output = database.evaluate(args[0]);
 		return output;
 	}
 }

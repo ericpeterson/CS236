@@ -2,8 +2,16 @@
 package project4;
 
 import project1.*;
-import project2.*;
+import datalogProgram.*;
+//import project2.*;
 
-public class Tuple
-{
+import java.util.HashSet;
+
+public class Tuple {
+  HashSet<AVPairs> attributeValuePairsSet;
+
+  // Constructor
+  Tuple(Fact fact) {
+
+  }
 }

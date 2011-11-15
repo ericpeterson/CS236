@@ -32,6 +32,7 @@
   <!--Note: the junit.jar is automatically on the classpath. No need to install junit-->
     <path id="classpath.src.classes">
       <pathelement location="${build}"/>
+      <pathelement location="src/DatalogProgram.jar"/>
     </path>
     <path id="classpath.test.classes">
       <pathelement location="${test-src}/junit.jar"/>
@@ -267,10 +268,10 @@
   <target name="run4" depends="compile4">
     <input message="Input a filename in the test/inputs directory (ie: ex41.txt):"
            addproperty="file" defaultvalue="ex41.txt"/>
-    <echo>java -cp build/ Driver 4 test/inputs/${file}</echo>
+    <echo>java -cp .:src/DatalogProgram.jar:build/ Driver 4 test/inputs/${file}</echo>
     <echo/>
     <exec executable="java">
-      <arg line="-cp build/ Driver 4 test/inputs/${file}"/>
+      <arg line="-cp .:src/DatalogProgram.jar:build/ Driver 4 test/inputs/${file}"/>
     </exec>
   </target>
 

@@ -5,11 +5,12 @@ import project1.*;
 
 public class Predicate {
   // Constructor
-  Predicate (SimplePredicate simplePred) {
+  Predicate (/*SimplePredicate simplePred*/) {
     
   }
 
-  public boolean eval(Tuple tuple) {
+  public boolean eval(/*Tuple tuple*/) {
     // return true if tuple satisfies predicate
+    return true;
   }
 }

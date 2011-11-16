@@ -28,6 +28,10 @@ public class Relation {
     return schema;
   }
 
+  public String getName () {
+    return name;
+  }
+
   void add(Tuple tuple) {
     if(!tupleSet.add(tuple)) {
       System.out.println("Warning: could not add " + tuple + 
@@ -39,7 +43,7 @@ public class Relation {
     System.out.println("TODO: implement rename");
     return null;
   }
-  public Relation select(Predicate) {
+  public Relation select(Predicate predicate) {
     System.out.println("TODO: implement select");
     return null;
   } 
@@ -47,11 +51,11 @@ public class Relation {
     System.out.println("TODO: implement project");
     return null;
   }
-  public Relation void union(Relation) {
+  public Relation union(Relation relation) {
     System.out.println("TODO: implement union");
     return null;
   }
-  public Relation void join(Relation) {
+  public Relation join(Relation relation) {
     System.out.println("TODO: implement join");
     return null;
   }

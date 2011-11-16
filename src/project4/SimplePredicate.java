@@ -9,10 +9,10 @@ public class SimplePredicate {
     
   }
 
-  public boolean eval(Query) {
+/*  public boolean eval(Query) {
     return database.getRelation(query.getName()).
           select(new Predicate(query)).
             rename(new AAPairs(query)).
               project(new Schema(query));
-  }
+  }*/
 }

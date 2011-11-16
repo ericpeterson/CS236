@@ -4,10 +4,13 @@
 
 package project4;
 
+import datalogProgram.*; 
+
 public class Project4 {
-	public static String body(String[] args) {
-    Database database = new Database();
-		String output = database.evaluate(args[0]);
+	public static String body(String[] args) { 
+    DatalogProgram datalogProgram = new DatalogProgram(args[0]);  
+    Database database = new Database(datalogProgram.getSchemes());
+		String output = "";
 		return output;
 	}
 }

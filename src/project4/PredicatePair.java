@@ -1,10 +1,10 @@
 //REQUIRED CLASS
-package project2;
+package project4;
 
 import project1.*;
 
 public class PredicatePair {
-  private Attribute attribute;
+/*  private Attribute attribute;
 
   // Constructor
   PredicatePair (Attribute attribute1) {
@@ -17,5 +17,5 @@ public class PredicatePair {
 
   public boolean eval(Tuple tuple) {
     // overridden in AVPair and APairs
-  }
+  }*/
 }

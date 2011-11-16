@@ -5,10 +5,10 @@ import project1.*;
 import datalogProgram.*;
 //import project2.*;
 
-import java.util.HashSet;
+import java.util.TreeSet;
 public class Schema {
-  // A Schema has a set of attributes
-  HashSet<Attribute> attributeSet;
+  // A Schema has an ordered set of attributes
+  TreeSet<Attribute> attributeSet;
   Scheme originalScheme;
   // Constructor
   Schema (Scheme scheme) {
@@ -24,6 +24,7 @@ public class Schema {
   }
 
   public Attribute getAttribute(int location) {
-    // Get attribute at location in original scheme     
+    // Get attribute at location in original scheme    
+    return null; 
   }
 }

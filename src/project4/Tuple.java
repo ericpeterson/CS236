@@ -8,21 +8,22 @@ import datalogProgram.*;
 import java.util.HashSet;
 
 public class Tuple {
-  HashSet<AVPairs> attributeValuePairsSet;
+  /*HashSet<AttributeValuePair> attributeValuePairsSet;*/
 
   // Constructor
   Tuple() {
     // Create empty tuple
   }
 
-  public void addAVPair (AVPairs newPair) {
+  /*public void addAVPair (AttributeValuePairs newPair) {
     if (!attributeValuePairsSet.add(newPair)) {
       System.out.println("Warning: " + newPair + 
                          " not added to set.");
     }
-  }
+  }*/
 
   public Tuple restrict(Schema schema) {
-    // implement strict (see slides)
+    // implement restrict (see slides)
+    return null;
   }
 }

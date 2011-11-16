@@ -5,7 +5,7 @@ import datalogProgram.*;
 //import project2.*;
 
 public class AttributeAttributePair extends PredicatePair {
-  Value high_value;
+/*  Value high_value;
 
   // Constructor
   AttributeAttributePair(Attribute attr, Value value) {
@@ -18,5 +18,5 @@ public class AttributeAttributePair extends PredicatePair {
 
   public boolean eval(Tuple tuple) {
     // returns true if the value associated with attribute1in the tuple is equal to the high_value in this
-  }
+  }*/
 }

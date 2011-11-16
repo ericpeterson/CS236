@@ -8,7 +8,7 @@ import datalogProgram.*;
 import java.util.HashSet;
 
 public class TupleSet {
-  HashSet<Tuple> tupleSet
+/*  HashSet<Tuple> tupleSet
 
   // Constructor
   TupleSet() {
@@ -28,5 +28,5 @@ public class TupleSet {
 
   public TupleSet union(TupleSet otherSet) {
     // Union the this and otherSet
-  }
+  }*/
 }

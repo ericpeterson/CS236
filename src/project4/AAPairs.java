@@ -5,7 +5,7 @@ import datalogProgram.*;
 //import project2.*;
 
 public class AAPairs {
-  HashSet<AttributeAttributePairs> aaPairs; 
+/*  HashSet<AttributeAttributePairs> aaPairs; 
  
   // Constructor
   AAPairs() {
@@ -14,5 +14,5 @@ public class AAPairs {
 
   public Iterator<AttributeAttributePairs> iterator() {
     return aaPairs.iterator();
-  }
+  }*/
 }

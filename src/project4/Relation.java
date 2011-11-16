@@ -14,9 +14,45 @@ public class Relation {
   private Schema schema;
   private HashSet<Tuple> tupleSet;
 
-  private void rename(AAPairs aaPairs) {}
-  private void select() {} 
-  private void project(Schema schema) {}
-  private void union() {}
-  private void join() {}
+  Relation (Scheme scheme) {
+    name = scheme.getName();
+    schema = new Schema(scheme);
+    tupleSet = new HashSet<Tuple>();
+  }
+
+  public HashSet<Tuple> getTuples() {
+    return tupleSet;
+  } 
+  
+  public Schema getSchema() {
+    return schema;
+  }
+
+  void add(Tuple tuple) {
+    if(!tupleSet.add(tuple)) {
+      System.out.println("Warning: could not add " + tuple + 
+                         " to set.");
+    }
+  }
+
+  public Relation rename(AAPairs aaPairs) {
+    System.out.println("TODO: implement rename");
+    return null;
+  }
+  public Relation select(Predicate) {
+    System.out.println("TODO: implement select");
+    return null;
+  } 
+  public Relation project(Schema schema) {
+    System.out.println("TODO: implement project");
+    return null;
+  }
+  public Relation void union(Relation) {
+    System.out.println("TODO: implement union");
+    return null;
+  }
+  public Relation void join(Relation) {
+    System.out.println("TODO: implement join");
+    return null;
+  }
 }

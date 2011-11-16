@@ -5,12 +5,14 @@ import datalogProgram.*;
 //import project2.*;
 
 public class AAPairs {
-  // AAPairs has two attributes
-  private String AAPair1;
-  private String AAPair2;
-  
+  HashSet<AttributeAttributePairs> aaPairs; 
+ 
   // Constructor
-  AAPairs(Query query) {
+  AAPairs() {
+    aaPairs = new HashSet<AttributeAttributePairs>();
+  }
 
+  public Iterator<AttributeAttributePairs> iterator() {
+    return aaPairs.iterator();
   }
 }

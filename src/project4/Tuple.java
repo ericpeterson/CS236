@@ -11,7 +11,18 @@ public class Tuple {
   HashSet<AVPairs> attributeValuePairsSet;
 
   // Constructor
-  Tuple(Fact fact) {
+  Tuple() {
+    // Create empty tuple
+  }
 
+  public void addAVPair (AVPairs newPair) {
+    if (!attributeValuePairsSet.add(newPair)) {
+      System.out.println("Warning: " + newPair + 
+                         " not added to set.");
+    }
+  }
+
+  public Tuple restrict(Schema schema) {
+    // implement strict (see slides)
   }
 }

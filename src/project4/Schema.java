@@ -6,12 +6,24 @@ import datalogProgram.*;
 //import project2.*;
 
 import java.util.HashSet;
-
 public class Schema {
   // A Schema has a set of attributes
-  HashSet<String> attributeSet;
+  HashSet<Attribute> attributeSet;
+  Scheme originalScheme;
   // Constructor
-  Schema (Query query) {
+  Schema (Scheme scheme) {
+    originalScheme = scheme;
+  }
 
+  public void changeAttributeName(Attribute oldName, Attribute newName) {
+    
+  }
+
+  public void restrict(Schema restricted) {
+    
+  }
+
+  public Attribute getAttribute(int location) {
+    // Get attribute at location in original scheme     
   }
 }

@@ -5,7 +5,11 @@ import project1.*;
 
 public class Predicate {
   // Constructor
-  Predicate (Query query) {
+  Predicate (SimplePredicate simplePred) {
+    
+  }
 
+  public boolean eval(Tuple tuple) {
+    // return true if tuple satisfies predicate
   }
 }

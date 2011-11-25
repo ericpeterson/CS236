@@ -6,14 +6,23 @@ import datalogProgram.*;
 //import project2.*;
 
 import java.util.HashSet;
+import java.util.TreeSet;
 
-public class Tuple {
-  /*HashSet<AttributeValuePair> attributeValuePairsSet;*/
+public class Tuple implements Comparable<Tuple> {
+  HashSet<AVPair> AVPairSet;
 
   // Constructor
-  Tuple() {
+  Tuple(FactList factList) {
     // Create empty tuple
   }
+
+  public int compareTo(Tuple tuple) {
+    return 0;
+  }
+
+  public TreeSet<AVPair> sort() {
+    return null;
+  }  
 
   /*public void addAVPair (AttributeValuePairs newPair) {
     if (!attributeValuePairsSet.add(newPair)) {
@@ -21,9 +30,9 @@ public class Tuple {
                          " not added to set.");
     }
   }*/
-
+/*
   public Tuple restrict(Schema schema) {
     // implement restrict (see slides)
     return null;
-  }
+  }*/
 }

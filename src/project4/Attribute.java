@@ -4,7 +4,9 @@ import project1.*;
 import datalogProgram.*;
 
 public class Attribute {
-  Attribute() {
-
+  // attribute name
+  String name;
+  Attribute(String attribute) {
+    name = attribute; 
   }
 } 

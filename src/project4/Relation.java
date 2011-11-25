@@ -16,11 +16,11 @@ public class Relation {
 
   Relation (Scheme scheme) {
     name = scheme.getName();
-    schema = new Schema(scheme);
+    schema = new Schema();
     tupleSet = new HashSet<Tuple>();
   }
 
-  public HashSet<Tuple> getTuples() {
+/*  public HashSet<Tuple> getTuples() {
     return tupleSet;
   } 
   
@@ -37,7 +37,7 @@ public class Relation {
       System.out.println("Warning: could not add " + tuple + 
                          " to set.");
     }
-  }
+  }*/
 
   public Relation rename(AAPairs aaPairs) {
     System.out.println("TODO: implement rename");

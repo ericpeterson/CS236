@@ -9,8 +9,8 @@ import datalogProgram.*;
 public class Project4 {
 	public static String body(String[] args) { 
     DatalogProgram datalogProgram = new DatalogProgram(args[0]);  
-    Database database = new Database(datalogProgram.getSchemes());
-		String output = "";
+    Database database = new Database(datalogProgram);
+		String output = database.evaluateQueryList(datalogProgram.getQueries());
 		return output;
 	}
 }

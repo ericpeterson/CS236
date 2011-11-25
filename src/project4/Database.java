@@ -13,9 +13,10 @@ public class Database {
   HashSet<Relation> relationSet;
 
   // Constructor
-  // @param file String the name of the test input file
-  Database (SchemeList schemes) {
-    Iterator itr = schemes.iterator();
+  // @param datalogProgram DatalogProgram The datalog program to be converted
+  //        into a database.
+  Database (DatalogProgram datalogProgram) {
+    /*Iterator itr = schemes.iterator();
     Scheme currentScheme = null;
     Relation currentRelation = null;
     relationSet = new HashSet<Relation>();
@@ -27,7 +28,16 @@ public class Database {
       if (!relationSet.add(currentRelation)) {  
         System.out.println("Warning: could not add " + currentRelation + " to set.");
       }
-    }
+    }*/
+  }
+
+  // evaluates the query list from the given datalog program. This function is
+  // called from the body(String[]) function.
+  // @param queryList QueryList The query list to evaluate.
+  String evaluateQueryList(QueryList queryList) {
+    String output = "";
+
+    return output;
   }
 
   /*public Relation getRelation(String name) {
@@ -64,17 +74,17 @@ public class Database {
 
   // Function called from the body method
   // @param file String name of test input file 
-  public String evaluate(String file) {
+  /*public String evaluate(String file) {
     String output = "";
  
     DatalogProgram prog = new DatalogProgram(file);
-    Relation relation;
+    Relation relation;*/
  
     /*for(Query query: prog.getQueries()) {
       System.out.println(query);
       relation = new Relation(query);
     }*/
 
-    return output;
-  } 
+    /*return output;
+  } */
 }

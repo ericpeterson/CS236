@@ -16,19 +16,21 @@ public class Database {
   // @param datalogProgram DatalogProgram The datalog program to be converted
   //        into a database.
   Database (DatalogProgram datalogProgram) {
-    /*Iterator itr = schemes.iterator();
-    Scheme currentScheme = null;
+    relationSet = new HashSet<Relation>(); 
+     
+    SchemeList schemeList = datalogProgram.getSchemes();
+    FactList factList = datalogProgram.getFacts();
+    Iterator itr = schemeList.iterator();
     Relation currentRelation = null;
-    relationSet = new HashSet<Relation>();
+    Scheme currentScheme = null;
 
     while(itr.hasNext()) {
       currentScheme = (Scheme)itr.next();
-      currentRelation = new Relation(currentScheme);
-      
-      if (!relationSet.add(currentRelation)) {  
-        System.out.println("Warning: could not add " + currentRelation + " to set.");
-      }
-    }*/
+      currentRelation = new Relation(currentScheme, factList);
+      if(!relationSet.add(currentRelation)) {
+        System.out.println("Warning: could not add " + currentRelation + " to set."); 
+      } 
+    }
   }
 
   // evaluates the query list from the given datalog program. This function is

@@ -14,7 +14,7 @@ public class Relation {
   private Schema schema;
   private HashSet<Tuple> tupleSet;
 
-  Relation (Scheme scheme) {
+  Relation (Scheme scheme, FactList factList) {
     name = scheme.getName();
     schema = new Schema();
     tupleSet = new HashSet<Tuple>();

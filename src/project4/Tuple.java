@@ -5,24 +5,28 @@ import project1.*;
 import datalogProgram.*;
 //import project2.*;
 
-import java.util.HashSet;
 import java.util.TreeSet;
+import java.util.ArrayList;
 
 public class Tuple implements Comparable<Tuple> {
-  HashSet<AVPair> AVPairSet;
+  private ArrayList<Parameter> AVList;
 
   // Constructor
-  Tuple(FactList factList) {
-    // Create empty tuple
+  Tuple(Fact fact) {
+    AVList = new ArrayList<Parameter>(fact.getParameters());
   }
 
   public int compareTo(Tuple tuple) {
     return 0;
   }
 
-  public TreeSet<AVPair> sort() {
+  public TreeSet<Parameter> sort() {
     return null;
   }  
+
+  public ArrayList<Parameter> getAVList() {
+    return AVList;
+  }
 
   /*public void addAVPair (AttributeValuePairs newPair) {
     if (!attributeValuePairsSet.add(newPair)) {

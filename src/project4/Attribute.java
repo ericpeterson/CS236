@@ -5,8 +5,16 @@ import datalogProgram.*;
 
 public class Attribute {
   // attribute name
-  String name;
+  private String name;
   Attribute(String attribute) {
     name = attribute; 
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String toString() {
+    return name;
   }
 } 

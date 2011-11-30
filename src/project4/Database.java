@@ -5,18 +5,18 @@ import project1.*;
 import datalogProgram.*;
 //import project2.*;
 
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 public class Database {
   // A database is a set of relations
-  HashSet<Relation> relationSet;
+  ArrayList<Relation> relationSet;
 
   // Constructor
   // @param datalogProgram DatalogProgram The datalog program to be converted
   //        into a database.
   Database (DatalogProgram datalogProgram) {
-    relationSet = new HashSet<Relation>(); 
+    relationSet = new ArrayList<Relation>(); 
      
     SchemeList schemeList = datalogProgram.getSchemes();
     FactList factList = datalogProgram.getFacts();
@@ -27,9 +27,26 @@ public class Database {
     while(itr.hasNext()) {
       currentScheme = (Scheme)itr.next();
       currentRelation = new Relation(currentScheme, factList);
-      if(!relationSet.add(currentRelation)) {
-        System.out.println("Warning: could not add " + currentRelation + " to set."); 
+      if(relationSet.contains(currentRelation)) {
+        System.out.println("Warning: could not add duplicate element " + currentRelation + " to set."); 
+      } else {
+        relationSet.add(currentRelation);
       } 
+    }
+
+    itr = relationSet.iterator();
+    while (itr.hasNext()) {
+      currentRelation = (Relation)itr.next();
+
+      System.out.println("Relation");
+      System.out.println("Name: " + currentRelation.getName());
+      System.out.println("Attributes"); 
+      System.out.println(currentRelation.getSchema().getAttributeSet()); 
+      Iterator itr3 = currentRelation.getTuples().iterator();
+      while (itr3.hasNext()) {
+        Tuple currentTuple = (Tuple)itr3.next();
+        System.out.println(currentTuple.getAVList());
+      }
     }
   }
 

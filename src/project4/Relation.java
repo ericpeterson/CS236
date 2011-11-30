@@ -7,6 +7,7 @@ import datalogProgram.*;
 
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class Relation {
   // A relation has a name, schema and
@@ -36,11 +37,19 @@ public class Relation {
 
       // attempt to add the current tuple to the set
       if(tupleSet.contains(currentTuple)) {
-        System.out.println("Warning: coult not add duplicate element " + currentTuple + " to the set.");
+        System.out.println("Warning: could not add duplicate element " + currentTuple + " to the set.");
       } else {
         tupleSet.add(currentTuple);
       } 
-    } 
+    }
+  }
+
+  public ArrayList<Tuple> getTupleSet() {
+    return tupleSet;
+  }
+
+  public TreeSet<Tuple> sort() {
+    return new TreeSet<Tuple>(this.getTupleSet()); 
   }
 
   public ArrayList<Tuple> getTuples() {

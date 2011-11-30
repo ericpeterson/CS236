@@ -7,6 +7,7 @@ import datalogProgram.*;
 
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class Database {
   // A database is a set of relations
@@ -33,21 +34,22 @@ public class Database {
         relationSet.add(currentRelation);
       } 
     }
-
-    itr = relationSet.iterator();
+    // Debugging
+    /*itr = relationSet.iterator();
     while (itr.hasNext()) {
       currentRelation = (Relation)itr.next();
-
+  TreeSet<Tuple> sortedTuples = currentRelation.sort(); 
       System.out.println("Relation");
       System.out.println("Name: " + currentRelation.getName());
       System.out.println("Attributes"); 
       System.out.println(currentRelation.getSchema().getAttributeSet()); 
-      Iterator itr3 = currentRelation.getTuples().iterator();
+      //Iterator itr3 = currentRelation.getTuples().iterator();
+      Iterator itr3 = sortedTuples.iterator();
       while (itr3.hasNext()) {
         Tuple currentTuple = (Tuple)itr3.next();
         System.out.println(currentTuple.getAVList());
       }
-    }
+    }*/
   }
 
   // evaluates the query list from the given datalog program. This function is
@@ -55,6 +57,19 @@ public class Database {
   // @param queryList QueryList The query list to evaluate.
   String evaluateQueryList(QueryList queryList) {
     String output = "";
+    boolean relationIsEmpty = false;
+
+    for(Query query: queryList) {
+      output += query + " ";
+
+      if (relationIsEmpty) {
+        output += "No\n";
+      } else {
+        output += "Yes(1)\n";
+      
+        output += "  A='a', B='a'\n";
+      }
+    }
 
     return output;
   }

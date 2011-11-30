@@ -48,6 +48,10 @@ public class Tuple implements Comparable<Tuple> {
     return AVList;
   }
 
+  public String toString() {
+    return AVList.toString(); 
+  }
+
   /*public void addAVPair (AttributeValuePairs newPair) {
     if (!attributeValuePairsSet.add(newPair)) {
       System.out.println("Warning: " + newPair + 

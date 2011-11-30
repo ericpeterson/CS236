@@ -58,15 +58,25 @@ public class Database {
   String evaluateQueryList(QueryList queryList) {
     String output = "";
     boolean relationIsEmpty = false;
+    Relation copyOfRelation = null;
 
     for(Query query: queryList) {
-      output += query + " ";
+      for(Relation relation: relationSet) {
+        if (relation.getName().equals(query.getName())) {
+          System.out.println("We have a match " + query.getName());
+          copyOfRelation = new Relation(relation);
+          System.out.println("Relation: " + copyOfRelation);
+          System.out.println("Query: " + query);
+          //copyOfRelation.rename(); 
+        }
+      } 
 
+      output += query + " ";
+      
       if (relationIsEmpty) {
         output += "No\n";
       } else {
         output += "Yes(1)\n";
-      
         output += "  A='a', B='a'\n";
       }
     }

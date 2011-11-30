@@ -34,6 +34,10 @@ public class Schema {
     return attributeSet;
   }
 
+  public String toString() {
+    return attributeSet.toString(); 
+  }
+
   /*public void changeAttributeName(Attribute oldName, Attribute newName) {
     
   }

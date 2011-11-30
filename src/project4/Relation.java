@@ -16,6 +16,13 @@ public class Relation {
   private Schema schema;
   private ArrayList<Tuple> tupleSet;
 
+  // copy constructor
+  Relation(Relation toBeCopiedRelation) {
+    name = toBeCopiedRelation.getName();
+    schema = toBeCopiedRelation.getSchema();
+    tupleSet = toBeCopiedRelation.getTupleSet(); 
+  }
+
   Relation (Scheme scheme, FactList factList) {
     name = scheme.getName();
     schema = new Schema(scheme);
@@ -90,5 +97,9 @@ public class Relation {
   public Relation join(Relation relation) {
     System.out.println("TODO: implement join");
     return null;
+  }
+  
+  public String toString() {
+    return "(" + this.getName() + ", " + this.getSchema() + ", " + this.getTupleSet() + ")"; 
   }
 }

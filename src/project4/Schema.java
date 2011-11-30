@@ -30,6 +30,11 @@ public class Schema {
     /*originalScheme = scheme;*/
   }
 
+  // Alternate constructor
+  Schema(ArrayList<Attribute> newAttributeSet) {
+    attributeSet = newAttributeSet;
+  }
+
   public ArrayList<Attribute> getAttributeSet () {
     return attributeSet;
   }

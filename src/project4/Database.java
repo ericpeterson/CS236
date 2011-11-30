@@ -59,26 +59,38 @@ public class Database {
     String output = "";
     boolean relationIsEmpty = false;
     Relation copyOfRelation = null;
+    ArrayList<Tuple> finalTuples = null;
 
     for(Query query: queryList) {
       for(Relation relation: relationSet) {
         if (relation.getName().equals(query.getName())) {
-          System.out.println("We have a match " + query.getName());
+          //System.out.println("We have a match " + query.getName());
           copyOfRelation = new Relation(relation);
-          System.out.println("Relation: " + copyOfRelation);
-          System.out.println("Query: " + query);
-          //copyOfRelation.rename(); 
+          //System.out.println("Relation: " + copyOfRelation);
+          //System.out.println("Query: " + query);
+          copyOfRelation.rename(query.getParameters()); 
+          //System.out.println("Renamed Relation: " + copyOfRelation);
+          ArrayList<Tuple> selected = copyOfRelation.select(query.getParameters());
+          //System.out.println("Selected Tuples: " + selected);
+          finalTuples = copyOfRelation.project(selected, query.getParameters());
         }
       } 
 
-      output += query + " ";
-      
+      System.out.println(finalTuples);
+
+      /*output += query + " ";
+   
+      relationIsEmpty = finalTuples.isEmpty(); 
+ 
       if (relationIsEmpty) {
         output += "No\n";
       } else {
-        output += "Yes(1)\n";
-        output += "  A='a', B='a'\n";
-      }
+        output += "Yes(" + finalTuples.size() + ")\n";
+        output += "  ";
+        for (Parameter parameter: finalTuples) {
+          output += parameter.getName() + "='" + parameter.getValue() + "', B='a'\n";
+        }
+      }*/
     }
 
     return output;

@@ -15,6 +15,10 @@ public class Tuple implements Comparable<Tuple> {
     AVList = new ArrayList<Parameter>(fact.getParameters());
   }
 
+  Tuple(ArrayList<Parameter> newAVList) {
+    AVList = newAVList;
+  }
+
   // returns 0 if this.tuple == tuple
   //         
   public int compareTo(Tuple tuple) throws NullPointerException {

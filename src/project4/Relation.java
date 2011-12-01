@@ -21,7 +21,20 @@ public class Relation {
   Relation(Relation toBeCopiedRelation) {
     name = toBeCopiedRelation.getName();
     schema = toBeCopiedRelation.getSchema();
-    tupleSet = toBeCopiedRelation.getTupleSet(); 
+    tupleSet = new ArrayList<Tuple>();
+    ArrayList<Tuple> toBeCopiedTupleSet = toBeCopiedRelation.getTupleSet(); 
+    ArrayList<Parameter> toBeCopiedAVList; 
+    ArrayList<Parameter> newAVList = new ArrayList<Parameter>(); 
+    Tuple newTuple;
+
+    for (Tuple tuple: toBeCopiedTupleSet) { 
+      toBeCopiedAVList = tuple.getAVList();
+      for (Parameter parameter: toBeCopiedAVList) {
+        newAVList.add(parameter);
+      }
+      newTuple = new Tuple(newAVList);
+      tupleSet.add(newTuple); 
+    }
   }
 
   Relation (Scheme scheme, FactList factList) {
@@ -92,7 +105,6 @@ public class Relation {
     Attribute currentAttribute = null;
     String wrapInAttribute = "";
     int index = 0;
-
     for(Parameter parameter: parameterList) {
       wrapInAttribute = currentSchema.get(index++).getName();
       if (null != parameter.getName()) {
@@ -114,7 +126,6 @@ public class Relation {
     String currentValue = "";
     String selectName = "";
     String selectValue = "";
-
     for (Parameter parameter: parameterList) {
       selectName = parameter.getName();
       selectValue = parameter.getValue();
@@ -145,14 +156,20 @@ public class Relation {
     List<Parameter> parameterList) {
     int index = 0;
     String currentParamName = "";
-
+    ArrayList<Tuple> projectedTuples = new ArrayList<Tuple>();
+ 
+    // copy selectedTuples into projectedTuples
+    for(Tuple tuple: selectedTuples) {
+      projectedTuples.add(tuple);
+    }
+System.out.println("inside: " + selectedTuples);
     for(Parameter parameter: parameterList) {
       currentParamName = parameter.getName();
       //System.out.println("current p name: " + currentParamName);
       //System.out.println(index);
       if (currentParamName == null) {
         //System.out.println("Removing " + parameter.getValue() + " from list");
-        for (Tuple tuple: selectedTuples) {
+        for (Tuple tuple: projectedTuples) {
           //System.out.println("Tuple before " + tuple);
           tuple.getAVList().remove(index);
           //System.out.println("Tuple after " + tuple);
@@ -161,7 +178,7 @@ public class Relation {
       index++;
     } 
 
-    return selectedTuples;
+    return projectedTuples;
   }
 
   /*public Relation union(Relation relation) {

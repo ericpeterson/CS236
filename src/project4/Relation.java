@@ -134,8 +134,8 @@ public class Relation {
       }
 
       index++;
-      System.out.println();
-      System.out.println();
+      //System.out.println();
+      //System.out.println();
     } 
 
     return selectedTuples;
@@ -148,14 +148,14 @@ public class Relation {
 
     for(Parameter parameter: parameterList) {
       currentParamName = parameter.getName();
-      System.out.println("current p name: " + currentParamName);
-      System.out.println(index);
+      //System.out.println("current p name: " + currentParamName);
+      //System.out.println(index);
       if (currentParamName == null) {
-        System.out.println("Removing " + parameter.getValue() + " from list");
+        //System.out.println("Removing " + parameter.getValue() + " from list");
         for (Tuple tuple: selectedTuples) {
-          System.out.println("Tuple before " + tuple);
+          //System.out.println("Tuple before " + tuple);
           tuple.getAVList().remove(index);
-          System.out.println("Tuple after " + tuple);
+          //System.out.println("Tuple after " + tuple);
         } 
       }
       index++;

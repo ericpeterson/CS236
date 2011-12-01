@@ -7,6 +7,7 @@ import datalogProgram.*;
 
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
 
 public class Database {
@@ -57,40 +58,48 @@ public class Database {
   // @param queryList QueryList The query list to evaluate.
   String evaluateQueryList(QueryList queryList) {
     String output = "";
-    boolean relationIsEmpty = false;
     Relation copyOfRelation = null;
     ArrayList<Tuple> finalTuples = null;
+    List<Parameter> queryParams = null;
+    String currentParamName = "";
+    String finalValue = "";
+    int paramIndex = 0;
 
     for(Query query: queryList) {
+      queryParams = query.getParameters();
       for(Relation relation: relationSet) {
         if (relation.getName().equals(query.getName())) {
           //System.out.println("We have a match " + query.getName());
           copyOfRelation = new Relation(relation);
           //System.out.println("Relation: " + copyOfRelation);
           //System.out.println("Query: " + query);
-          copyOfRelation.rename(query.getParameters()); 
+          copyOfRelation.rename(queryParams); 
           //System.out.println("Renamed Relation: " + copyOfRelation);
-          ArrayList<Tuple> selected = copyOfRelation.select(query.getParameters());
+          ArrayList<Tuple> selected = copyOfRelation.select(queryParams);
           //System.out.println("Selected Tuples: " + selected);
-          finalTuples = copyOfRelation.project(selected, query.getParameters());
+          finalTuples = copyOfRelation.project(selected, queryParams);
+          break;
         }
-      } 
-
-      System.out.println(finalTuples);
-
-      /*output += query + " ";
-   
-      relationIsEmpty = finalTuples.isEmpty(); 
- 
-      if (relationIsEmpty) {
+      }
+      output += query + " ";
+      if (finalTuples.isEmpty()) {
         output += "No\n";
       } else {
         output += "Yes(" + finalTuples.size() + ")\n";
-        output += "  ";
-        for (Parameter parameter: finalTuples) {
-          output += parameter.getName() + "='" + parameter.getValue() + "', B='a'\n";
+        for (Tuple tuple: finalTuples) {
+          output += "  ";
+          for (Parameter parameter: queryParams) {
+            currentParamName = parameter.getName();
+            if (currentParamName != null) {
+              finalValue = tuple.getAVList().get(paramIndex).getValue();
+              output += currentParamName + "='" + finalValue + "', "; 
+            }
+          }
+          paramIndex = 0;
+          output = output.substring(0, output.length()-2);
+          output += "\n";
         }
-      }*/
+      }
     }
 
     return output;

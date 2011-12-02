@@ -60,6 +60,7 @@ public class Database {
     String output = "";
     Relation copyOfRelation = null;
     ArrayList<Tuple> finalTuples = null;
+    TreeSet<Tuple> finalTuplesTreeSet = null;
     List<Parameter> queryParams = null;
     String currentParamName = "";
     String finalValue = "";
@@ -85,17 +86,18 @@ public class Database {
      // System.out.println("select: " + copyOfRelation); 
           //System.out.println("Selected Tuples: " + selected);
           finalTuples = copyOfRelation.project(selected, queryParams);
+          finalTuplesTreeSet = Tuple.sort(finalTuples);   
      // System.out.println("project: " + relationSet); 
      // System.out.println("project: " + copyOfRelation); 
           //System.out.println("Final Tuples: " + finalTuples);
         }
       }
       output += query + " ";
-      if (finalTuples.isEmpty()) {
+      if (finalTuplesTreeSet.isEmpty()) {
         output += "No\n";
       } else {
-        output += "Yes(" + finalTuples.size() + ")\n";
-        for (Tuple tuple: finalTuples) {
+        output += "Yes(" + finalTuplesTreeSet.size() + ")\n";
+        for (Tuple tuple: finalTuplesTreeSet) {
           output += "  ";
           for (Parameter parameter: queryParams) {
             currentParamName = parameter.getName();

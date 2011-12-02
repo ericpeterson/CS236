@@ -6,6 +6,7 @@ import datalogProgram.*;
 //import project2.*;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class Tuple implements Comparable<Tuple> {
   private ArrayList<Parameter> AVList;
@@ -50,6 +51,10 @@ public class Tuple implements Comparable<Tuple> {
 
   public ArrayList<Parameter> getAVList() {
     return AVList;
+  }
+
+  public static TreeSet<Tuple> sort(ArrayList<Tuple> toSort) {
+    return new TreeSet<Tuple>(toSort); 
   }
 
   public String toString() {

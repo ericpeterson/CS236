@@ -143,12 +143,15 @@ public class Relation {
     String currentValue = "";
     String selectName = "";
     String selectValue = "";
+    boolean allVariables = true;
+
     for (Parameter parameter: parameterList) {
       selectName = parameter.getName();
       selectValue = parameter.getValue();
 
       //System.out.println("Selected name: " + selectName);
       if (null == selectName) {
+        allVariables = false;
         for(Tuple tuple: tupleSet) {
           currentValue = tuple.getAVList().get(index).getValue();
           //System.out.println("Current value: " + currentValue);
@@ -166,6 +169,10 @@ public class Relation {
       //System.out.println();
     } 
 
+    if (allVariables) {
+      selectedTuples = tupleSet;  
+    }
+
     return selectedTuples;
   }
  
@@ -174,6 +181,7 @@ public class Relation {
     int index = 0;
     String currentParamName = "";
     ArrayList<Tuple> projectedTuples = new ArrayList<Tuple>();
+    boolean allVariables = true;
  
     // copy selectedTuples into projectedTuples
     for(Tuple tuple: selectedTuples) {
@@ -182,22 +190,55 @@ public class Relation {
 
     for(Parameter parameter: parameterList) {
       currentParamName = parameter.getName();
-      //System.out.println("current p name: " + currentParamName);
-      //System.out.println(index);
       if (currentParamName == null) {
-        //System.out.println("Removing " + parameter.getValue() + " from list");
+        allVariables = false;
         for (Tuple tuple: projectedTuples) {
-          //System.out.println("Tuple before " + tuple);
           if (tuple.getAVList().size() != 0) {
             tuple.getAVList().remove(index);
           } else {
             continue;
           }
-
-          //System.out.println("Tuple after " + tuple);
         } 
       } else {
         index++;
+      }
+    }
+
+    if (allVariables) {
+      projectedTuples = new ArrayList<Tuple>();
+      ArrayList<String> keepTrackName = new ArrayList<String>();
+      ArrayList<String> keepTrackValue = new ArrayList<String>();
+      String currentValue = "";
+      boolean addTuple = true;
+      for(Tuple tuple: selectedTuples) {
+        keepTrackName = new ArrayList<String>();
+        keepTrackValue = new ArrayList<String>();
+        addTuple = true;
+        int listSize = parameterList.size();
+//System.out.println("tuple: " + tuple);
+//System.out.println("Query list: " + parameterList);
+        for (index = 0; index < listSize; index++) { 
+          currentParamName = parameterList.get(index).getName();
+          currentValue = tuple.getAVList().get(index).getValue();
+          //System.out.println("Name: " + currentParamName);
+          //System.out.println("Value: " + currentValue);
+          if (keepTrackName.contains(currentParamName)) {
+            //System.out.println("We've seen " + currentParamName + " before.");
+            if (!keepTrackValue.get(keepTrackName.indexOf(currentParamName)).equals(currentValue)) {
+              //System.out.println("Throw out " + tuple); 
+              addTuple = false;
+              break;
+            }
+          } else {
+            keepTrackName.add(currentParamName);
+            keepTrackValue.add(currentValue);
+          }
+        }
+        if (addTuple) {
+          //System.out.println("This tuple is good to add: " + tuple);
+          projectedTuples.add(tuple);
+        }
+        //System.out.println();
       }
     } 
 

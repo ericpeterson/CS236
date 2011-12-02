@@ -67,7 +67,6 @@ public class Database {
     int paramIndex = 0;
 
     for(Query query: queryList) {
-    // System.out.println("new query: "  + query);
       queryParams = query.getParameters();
       for(Relation relation: relationSet) {
         if (relation.getName().equals(query.getName())) {
@@ -89,29 +88,35 @@ public class Database {
           finalTuplesTreeSet = Tuple.sort(finalTuples);   
      // System.out.println("project: " + relationSet); 
      // System.out.println("project: " + copyOfRelation); 
-          //System.out.println("Final Tuples: " + finalTuples);
+          //System.out.println("Final Tuples: " + finalTuplesTreeSet);
         }
       }
       output += query + " ";
       if (finalTuplesTreeSet.isEmpty()) {
         output += "No\n";
       } else {
+        boolean noFreeVariables = true;
         output += "Yes(" + finalTuplesTreeSet.size() + ")\n";
         for (Tuple tuple: finalTuplesTreeSet) {
           output += "  ";
           for (Parameter parameter: queryParams) {
             currentParamName = parameter.getName();
             if (currentParamName != null) {
+              noFreeVariables = false;
               finalValue = tuple.getAVList().get(paramIndex).getValue();
               output += currentParamName + "='" + finalValue + "', "; 
+              paramIndex++;
             }
           }
           paramIndex = 0;
           output = output.substring(0, output.length()-2);
-          output += "\n";
+          if (!noFreeVariables)
+            output += "\n";
         }
       }
     }
+
+    output += "\n";
 
     return output;
   }

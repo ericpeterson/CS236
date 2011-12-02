@@ -66,26 +66,27 @@ public class Database {
     int paramIndex = 0;
 
     for(Query query: queryList) {
-    System.out.println("new query: "  + query);
+    // System.out.println("new query: "  + query);
       queryParams = query.getParameters();
       for(Relation relation: relationSet) {
         if (relation.getName().equals(query.getName())) {
         //  System.out.println("We have a match " + query.getName());
-     System.out.println(relationSet); 
+      //System.out.println(relationSet); 
           copyOfRelation = new Relation(relation);
+      //System.out.println(copyOfRelation); 
           //System.out.println("Relation: " + copyOfRelation);
           //System.out.println("Query: " + query);
           copyOfRelation.rename(queryParams); 
-     System.out.println("rename: " + relationSet); 
-     System.out.println("rename: " + copyOfRelation); 
+     // System.out.println("rename: " + relationSet); 
+     // System.out.println("rename: " + copyOfRelation); 
           //System.out.println("Renamed Relation: " + copyOfRelation);
           ArrayList<Tuple> selected = copyOfRelation.select(queryParams);
-     System.out.println("select: " + relationSet); 
-     System.out.println("select: " + copyOfRelation); 
+     // System.out.println("select: " + relationSet); 
+     // System.out.println("select: " + copyOfRelation); 
           //System.out.println("Selected Tuples: " + selected);
           finalTuples = copyOfRelation.project(selected, queryParams);
-     System.out.println("project: " + relationSet); 
-     System.out.println("project: " + copyOfRelation); 
+     // System.out.println("project: " + relationSet); 
+     // System.out.println("project: " + copyOfRelation); 
           //System.out.println("Final Tuples: " + finalTuples);
         }
       }

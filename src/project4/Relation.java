@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.Collections;
 
 public class Relation {
   // A relation has a name, schema and
@@ -21,20 +22,7 @@ public class Relation {
   Relation(Relation toBeCopiedRelation) {
     name = toBeCopiedRelation.getName();
     schema = toBeCopiedRelation.getSchema();
-    tupleSet = new ArrayList<Tuple>();
-    ArrayList<Tuple> toBeCopiedTupleSet = toBeCopiedRelation.getTupleSet(); 
-    ArrayList<Parameter> toBeCopiedAVList; 
-    ArrayList<Parameter> newAVList = new ArrayList<Parameter>(); 
-    Tuple newTuple;
-
-    for (Tuple tuple: toBeCopiedTupleSet) { 
-      toBeCopiedAVList = tuple.getAVList();
-      for (Parameter parameter: toBeCopiedAVList) {
-        newAVList.add(parameter);
-      }
-      newTuple = new Tuple(newAVList);
-      tupleSet.add(newTuple); 
-    }
+    tupleSet = deepCopyArrayList(toBeCopiedRelation.getTupleSet());
   }
 
   Relation (Scheme scheme, FactList factList) {
@@ -63,6 +51,35 @@ public class Relation {
         tupleSet.add(currentTuple);
       } 
     }
+  }
+
+  public static ArrayList<Tuple> deepCopyArrayList (ArrayList<Tuple> toBeCopied) {
+    ArrayList<Parameter> toBeCopiedAVList;
+    ArrayList<Parameter> copiedAVList = new ArrayList<Parameter>();
+    Parameter[] p;
+    Parameter[] toBeCopiedArray = null;
+    Parameter[] copiedArray = null;
+    Tuple copiedTuple;
+    ArrayList<Tuple> copied = new ArrayList<Tuple>();
+
+    for (Tuple tuple: toBeCopied) {
+      copiedAVList = new ArrayList<Parameter>();
+      toBeCopiedAVList = tuple.getAVList();
+      p = new Parameter[toBeCopiedAVList.size()];
+      toBeCopiedArray = toBeCopiedAVList.toArray(p);
+      copiedArray = new Parameter[p.length];
+
+      for (int index = 0; index < toBeCopiedArray.length; index++) {
+        copiedArray[index] = toBeCopiedArray[index];
+        copiedAVList.add(copiedArray[index]);
+      }
+
+      copiedTuple = new Tuple(copiedAVList);
+      copied.add(copiedTuple);
+      copiedAVList = null;
+    }
+    
+    return copied;
   }
 
   public ArrayList<Tuple> getTupleSet() {
@@ -162,7 +179,7 @@ public class Relation {
     for(Tuple tuple: selectedTuples) {
       projectedTuples.add(tuple);
     }
-System.out.println("inside: " + selectedTuples);
+
     for(Parameter parameter: parameterList) {
       currentParamName = parameter.getName();
       //System.out.println("current p name: " + currentParamName);
@@ -171,11 +188,17 @@ System.out.println("inside: " + selectedTuples);
         //System.out.println("Removing " + parameter.getValue() + " from list");
         for (Tuple tuple: projectedTuples) {
           //System.out.println("Tuple before " + tuple);
-          tuple.getAVList().remove(index);
+          if (tuple.getAVList().size() != 0) {
+            tuple.getAVList().remove(index);
+          } else {
+            continue;
+          }
+
           //System.out.println("Tuple after " + tuple);
         } 
+      } else {
+        index++;
       }
-      index++;
     } 
 
     return projectedTuples;

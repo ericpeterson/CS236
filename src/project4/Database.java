@@ -128,7 +128,7 @@ public class Database {
       }
     }
 
-    output += "\n";
+    //output += "\n";
 
     return output;
   }

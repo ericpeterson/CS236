@@ -144,8 +144,31 @@ public class Relation {
     String selectName = "";
     String selectValue = "";
     boolean allVariables = true;
+    boolean addTuple = true;
 
-    for (Parameter parameter: parameterList) {
+    for(Tuple tuple: tupleSet) {
+      int listSize = parameterList.size();
+      addTuple = true;
+      for (index = 0; index < listSize; index++) {
+        currentValue = tuple.getAVList().get(index).getValue();
+        selectName = parameterList.get(index).getName();
+        selectValue = parameterList.get(index).getValue();
+
+        if (null == selectName) {
+          allVariables = false; 
+          if (!currentValue.equals(selectValue)) {
+            addTuple = false;
+            break; 
+          } 
+        }
+      }
+  
+      if (addTuple) {
+        selectedTuples.add(tuple);
+      } 
+    }
+
+    /*for (Parameter parameter: parameterList) {
       selectName = parameter.getName();
       selectValue = parameter.getValue();
 
@@ -167,7 +190,7 @@ public class Relation {
       index++;
       //System.out.println();
       //System.out.println();
-    } 
+    }*/ 
 
     if (allVariables) {
       selectedTuples = tupleSet;  

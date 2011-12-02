@@ -96,12 +96,23 @@ public class Database {
         output += "No\n";
       } else {
         boolean noFreeVariables = true;
+        ArrayList<String> keepTrack;
         output += "Yes(" + finalTuplesTreeSet.size() + ")\n";
         for (Tuple tuple: finalTuplesTreeSet) {
+          //System.out.println("Examining tuple " + tuple);
           output += "  ";
+          keepTrack = new ArrayList<String>();
           for (Parameter parameter: queryParams) {
             currentParamName = parameter.getName();
+            //System.out.println("Parameter: " + parameter);
             if (currentParamName != null) {
+              if(keepTrack.contains(currentParamName)) {
+                //System.out.println("We've already got " + currentParamName + ". Moving on");
+                continue;
+              } else {
+                //System.out.println("Add " + currentParamName + " to list");
+                keepTrack.add(currentParamName);
+              }
               noFreeVariables = false;
               finalValue = tuple.getAVList().get(paramIndex).getValue();
               output += currentParamName + "='" + finalValue + "', "; 
@@ -112,6 +123,7 @@ public class Database {
           output = output.substring(0, output.length()-2);
           if (!noFreeVariables)
             output += "\n";
+          //System.out.println();
         }
       }
     }

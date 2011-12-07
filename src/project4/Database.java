@@ -85,14 +85,28 @@ public class Database {
     String[] leftArray = noPeriod.split("[)]\\s*,"); 
     ArrayList<String> leftPredicates = new ArrayList<String>();
     int count = 0; 
+    int sizeOfLeftArray = leftArray.length;
 
-    for(String predicate: leftArray) {
-      String toAdd = predicate;
-      if ((count++ % 2) == 0 && (leftArray.length > 1)) {
-        toAdd += ")"; 
-      }
+    switch(sizeOfLeftArray) {
+      case 0:
+        leftPredicates.clear();
+        break;
+      case 1:
+        leftPredicates.add(leftArray[0]);
+        break;
+      case 2:
+        leftPredicates.add(leftArray[0] + ")");
+        leftPredicates.add(leftArray[1]);
+        break;
+      default:
+        for(int index=0; index < sizeOfLeftArray; index++) {
+          String toAdd = leftArray[index];
+          if (index != sizeOfLeftArray - 1) {
+            toAdd += ")";
+          }
 
-      leftPredicates.add(toAdd); 
+          leftPredicates.add(toAdd); 
+        }
     }
 
     return leftPredicates; 

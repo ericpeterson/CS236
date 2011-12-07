@@ -3,13 +3,17 @@
 //DO NOT ADD METHODS
 
 package project5;
+import project4.*;
+import datalogProgram.*;
 
 public class Project5
 {
 	public static String body(String[] args)
 	{
-System.out.println("Implement the Project5.body");
-		String output = "";
+    DatalogProgram datalogProgram = new DatalogProgram(args[0]);
+    Database database = new Database(datalogProgram);
+		String output = database.evaluateRuleList(datalogProgram);
+
 		return output;
 	}
 }

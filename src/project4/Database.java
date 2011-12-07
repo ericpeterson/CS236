@@ -17,7 +17,7 @@ public class Database {
   // Constructor
   // @param datalogProgram DatalogProgram The datalog program to be converted
   //        into a database.
-  Database (DatalogProgram datalogProgram) {
+  public Database (DatalogProgram datalogProgram) {
     relationSet = new ArrayList<Relation>(); 
      
     SchemeList schemeList = datalogProgram.getSchemes();
@@ -51,6 +51,51 @@ public class Database {
         System.out.println(currentTuple.getAVList());
       }
     }*/
+  }
+
+  public String evaluateRuleList(DatalogProgram datalogProgram) {
+    String output = "";
+    RuleList ruleList = datalogProgram.getRules();
+    ArrayList<String> leftPredicates = new ArrayList<String>();
+
+    // Step 1: add all tuples that can be derived using the rules
+    //         to the existing relations.
+    System.out.println("Step 1: add tuples from rules");
+    for(Rule rule: ruleList) {
+      leftPredicates = Database.getLeftPredicates(rule);
+      for (String predicate: leftPredicates) {
+        System.out.println(predicate);
+      }
+    } 
+
+    // Step 2: process each of the queries in the Datalog program
+    //         as we did in Project 4.
+    System.out.println("Step 2: evaluate queries as before");
+    output = this.evaluateQueryList(datalogProgram.getQueries()); 
+
+    output += "Done!";
+ 
+    return output;
+  }
+
+  private static ArrayList<String> getLeftPredicates (Rule rule) {
+    String ruleStr = rule.toString();
+    String noHead = ruleStr.substring(ruleStr.indexOf(':')+3);
+    String noPeriod = noHead.replaceAll("[.]", "");
+    String[] leftArray = noPeriod.split("[)]\\s*,"); 
+    ArrayList<String> leftPredicates = new ArrayList<String>();
+    int count = 0; 
+
+    for(String predicate: leftArray) {
+      String toAdd = predicate;
+      if ((count++ % 2) == 0 && (leftArray.length > 1)) {
+        toAdd += ")"; 
+      }
+
+      leftPredicates.add(toAdd); 
+    }
+
+    return leftPredicates; 
   }
 
   // evaluates the query list from the given datalog program. This function is

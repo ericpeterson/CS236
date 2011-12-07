@@ -281,10 +281,10 @@
   <target name="run5" depends="compile5">
     <input message="Input a filename in the test/inputs/ directory (ie: i01.txt,ex50.txt):"
            addproperty="file" defaultvalue="i01.txt"/>
-    <echo>java -cp build/ Driver 5 test/inputs/${file}</echo>
+    <echo>java -cp .:src/DatalogProgram.jar:build/ Driver 5 test/inputs/${file}</echo>
     <echo/>
     <exec executable="java">
-      <arg line="-cp build/ Driver 5 test/inputs/${file}"/>
+      <arg line="-cp .:src/DatalogProgram.jar:build/ Driver 5 test/inputs/${file}"/>
     </exec>
   </target>
 

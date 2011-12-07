@@ -268,14 +268,13 @@ public class Relation {
     return projectedTuples;
   }
 
-  /*public Relation union(Relation relation) {
+  public void union (Relation relation) {
     System.out.println("TODO: implement union");
-    return null;
   }
-  public Relation join(Relation relation) {
+
+  public void join (Relation relation) {
     System.out.println("TODO: implement join");
-    return null;
-  }*/
+  }
   
   public String toString() {
     return "(" + this.getName() + ", " + this.getSchema() + ", " + this.getTupleSet() + ")"; 
